@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
-import {UserService} from '../../../service/UserService';
+import {UserService} from '../../../service/user.service';
 
 
 @Component({
@@ -17,7 +17,7 @@ export class ModifyPasswordComponent implements OnInit {
               private userService: UserService) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.initForm();
   }
 
@@ -42,7 +42,7 @@ export class ModifyPasswordComponent implements OnInit {
       this.modifyPasswordForm.get('oldPassword').value)
       .subscribe(() => {
         this.userService.logout().subscribe(() => {
-          this.router.navigateByUrl('/auth');
+          this.router.navigateByUrl('auth');
         });
       }, () => {
         console.log('修改密码失败');

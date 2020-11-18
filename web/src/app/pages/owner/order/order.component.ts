@@ -9,7 +9,8 @@ export class OrderComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
+  ngOnInit(): void {
+
   }
 
 }

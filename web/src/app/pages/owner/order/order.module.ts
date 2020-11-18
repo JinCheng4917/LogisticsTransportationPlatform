@@ -13,7 +13,7 @@ import { OrderComponent } from './order.component';
     CommonModule,
     OrderRoutingModule,
     ReactiveFormsModule,
-    FuncModule
+    FuncModule,
   ]
 })
 export class OrderModule {

@@ -7,6 +7,9 @@ import {PartModule} from './part/part.module';
 import {PersonalCenterModule} from './pages/personal-center/personal-center.module';
 import {FuncModule} from './func/func.module';
 import {OrderModule} from './pages/owner/order/order.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {YunzhiInterceptor} from './net/yunzhi.interceptor';
 
 @NgModule({
   declarations: [
@@ -16,11 +19,16 @@ import {OrderModule} from './pages/owner/order/order.module';
     BrowserModule,
     AppRoutingModule,
     FuncModule,
-    PersonalCenterModule,
-    OrderModule,
     PartModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: YunzhiInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

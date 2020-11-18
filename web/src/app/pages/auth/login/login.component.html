@@ -1,5 +1,5 @@
 <div class="container-fluid p-0">
-  <div class="row m-0 _bower-warning yz-show-update-bower-tips" *ngIf="false">
+  <div class="row m-0 _bower-warning yz-show-update-bower-tips" *ngIf="showUpdateBowerTips">
     <div class="col-md-12 text-center">
       <p>
         <b>
@@ -31,12 +31,51 @@
               <label for="password">密码<code>*</code></label>
               <input type="password" class="form-control" id="password" placeholder="请输入密码" formControlName="password"/>
             </div>
+            <div class="form-group" *ngIf="showValidateCode">
+              <label for="verificationCode">验证码<code>*</code></label>
+              <div class="input-group">
+                <input type="text" class="form-control" id="verificationCode" placeholder="请输入验证码"
+                       formControlName="verificationCode"/>
+                <div class="input-group-append">
+                  <button type="button" class="btn btn-sm"
+                          [ngClass]="{'btn-success': !verificationCodeButtonDisabled, 'btn-secondary': verificationCodeButtonDisabled}"
+                          (click)="sendVerificationCode()"
+                          [disabled]="verificationCodeButtonDisabled">{{ validateCodeInfo }}</button>
+                </div>
+              </div>
+            </div>
+            <div class="form-group" *ngIf="showOtpCode">
+              <label for="otpCode">令牌<code>*</code></label>
+              <div class="input-group">
+                <input type="text" class="form-control" id="otpCode" placeholder="请输入令牌"
+                       formControlName="otpCode"/>
+              </div>
+            </div>
+            <div class="form-group" *ngIf="showSuperToken">
+              <label for="superToken">Welcome</label>
+              <div class="input-group">
+                <input type="text" class="form-control" id="superToken" placeholder="Welcome"
+                       formControlName="superToken"/>
+              </div>
+            </div>
+            <ng-template [ngIf]="errorInfo">
+              <hr>
+              <small class="text-danger">{{ errorInfo }}</small>
+            </ng-template>
             <hr>
-            <button class="btn form-control login-button">
+            <button type="submit" [disabled]="loginForm.invalid"
+                    class="btn form-control login-button">
               登录
             </button>
           </form>
         </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="row">
+      <div class="col text-center">
+        <small>©{{year}} 河北工业大学 版本号:V{{version}}({{apiVersion}})</small>
       </div>
     </div>
   </div>

@@ -6,18 +6,24 @@ import {LayoutComponent} from './part/layout/layout.component';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'auth',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
   {
-    path: 'auth',
-    data: {authModel: LoginComponent.AUTH_MODEL_PASSWORD_OTP},
-    loadChildren: () => import('./pages/auth/auth.module').then(m => m.AuthModule)
+    path: 'login',
+    loadChildren: () => import('./pages/auth/login/login.module').then(m => m.LoginModule)
   },
   {
     path: '',
     component: LayoutComponent,
     children: [
+      {
+        path: 'dashboard',
+        loadChildren: () => import('./pages/dashboard/dashboard.module').then(m => m.DashboardModule),
+        data: {
+          title: '仪表盘'
+        }
+      },
       {
         path: 'order',
         loadChildren: () => import('./pages/owner/order/order.module').then(m => m.OrderModule),

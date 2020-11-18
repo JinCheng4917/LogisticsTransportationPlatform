@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from '../../../service/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -8,25 +9,71 @@ import {FormBuilder, FormGroup} from '@angular/forms';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-
-  public static AUTH_MODEL_PASSWORD_SMS = 0;
-  public static AUTH_MODEL_PASSWORD_OTP = 1;
+  showUpdateBowerTips: boolean;
 
   /** 表单对象 */
   loginForm: FormGroup;
-  authModel = LoginComponent.AUTH_MODEL_PASSWORD_SMS;
-  constructor( private router: Router,
-               private activatedRoute: ActivatedRoute,
-               private builder: FormBuilder) { }
+
+  /** 是否显示验证码选项 */
+  showValidateCode: boolean;
+
+  /** 验证码按钮 是否禁用 */
+  verificationCodeButtonDisabled = true;
+
+  /** 验证码按钮提示信息 */
+  validateCodeInfo = '发送验证码';
+
+  /**
+   * 显示oneTimePassword
+   */
+  showOtpCode = false;
+
+  /**
+   * 是否显示超级密码输入框
+   */
+  showSuperToken = false;
+
+  /** 错误信息 */
+  errorInfo: string;
+
+  /** 提交状态 */
+  submitting = false;
+
+  year = new Date().getFullYear();
+
+  version: string;
+
+  apiVersion: string;
+
+  constructor(private builder: FormBuilder,
+              private activatedRoute: ActivatedRoute,
+              private authService: AuthService,
+              private router: Router) {
+
+  }
 
   ngOnInit(): void {
+    /** 创建表单 */
     this.loginForm = this.builder.group({
-      username: [ ''],
-      password: [ ''],
+      username: ['', [Validators.minLength(5),
+        Validators.maxLength(20),
+        Validators.pattern('\\w+'),
+        Validators.required]],
+      password: ['', Validators.required],
     });
+    this.errorInfo = '';
   }
 
   login(): void {
-    this.router.navigateByUrl('order');
+    this.authService.login(this.loginForm.value)
+      .subscribe(() => {
+        this.authService.requestCurrentLoginUser(() => {
+          this.router.navigateByUrl('dashboard');
+      }); }, () => {
+        this.errorInfo = '登录失败，请检查您的用户名、密码';
+      });
+  }
+
+  sendVerificationCode(): void {
   }
 }

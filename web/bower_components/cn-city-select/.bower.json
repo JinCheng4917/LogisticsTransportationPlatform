@@ -1,0 +1,30 @@
+{
+  "name": "cn-city-select",
+  "main": "./cn-city-select.js",
+  "homepage": "https://github.com/MrHuxu/angular-city-select",
+  "authors": [
+    "Xu Hu <hxtheone@gmail.com>"
+  ],
+  "description": "An Angular directive to provide Chine city selection.",
+  "keywords": [
+    "city-select"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "_release": "09d216ed59",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "09d216ed59d594be15a075c507df694362574391"
+  },
+  "_source": "https://github.com/MrHuxu/cn-city-select.git",
+  "_target": "*",
+  "_originalSource": "cn-city-select",
+  "_direct": true
+}

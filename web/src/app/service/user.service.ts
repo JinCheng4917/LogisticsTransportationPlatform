@@ -1,12 +1,12 @@
-import {AbstractControl, AsyncValidatorFn, FormGroup, ValidationErrors, ValidatorFn} from '@angular/forms';
-import {Observable, ReplaySubject} from 'rxjs';
-import {catchError, map, tap} from 'rxjs/operators';
-import {User} from '../func/User';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Router} from '@angular/router';
-import {CommonService} from './CommomService';
 import {Injectable} from '@angular/core';
-import {VUser} from '../base/VUser';
+import {CommonService} from './common.service';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Observable, ReplaySubject} from 'rxjs';
+import {Router} from '@angular/router';
+import {catchError, map, tap} from 'rxjs/operators';
+import {VUser} from '../base/vuser';
+import {AbstractControl, AsyncValidatorFn, FormGroup, ValidationErrors, ValidatorFn} from '@angular/forms';
+import {User} from '../func/User';
 
 @Injectable({
   providedIn: 'root'
@@ -24,11 +24,15 @@ export class UserService {
     this.getCurrentLoginUser();
   }
 
-  private getCurrentLoginUser(): void {
+  private getCurrentLoginUser() {
+    const appOnReadyItem = this.commonService.getAppOnReadyItem();
+
     this.httpClient.get<User>(`${this.url}/me`)
       .subscribe(user => {
+        appOnReadyItem.ready = true;
         this.setCurrentLoginUser(user);
       }, () => {
+        appOnReadyItem.ready = true;
         this.setCurrentLoginUser(null);
       });
   }
@@ -59,6 +63,15 @@ export class UserService {
       this.setCurrentLoginUser(null);
     }));
   }
+
+  /**
+   * 用户注册
+   * @param user 用户
+   */
+  register(user: User): Observable<void> {
+    return this.httpClient.post<void>(`${this.url}/register`, user);
+  }
+
   /**
    * 设置当前登录用户
    * @param user 登录用户
@@ -118,7 +131,7 @@ export class UserService {
 
   /**
    * 重置密码
-   * @param id  学生id
+   * @param id  用户id
    * @param student  学生
    */
   public resetPassword(id: number): Observable<void> {

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {User} from '../../../func/User';
-import {UserService} from '../../../service/UserService';
+import {UserService} from '../../../service/user.service';
 
 @Component({
   selector: 'app-main',
