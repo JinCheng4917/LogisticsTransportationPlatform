@@ -3,6 +3,7 @@ package api.platform.Enyity;
 
 import api.platform.Service.BeanService;
 import com.fasterxml.jackson.annotation.JsonView;
+import com.mengyunzhi.core.entity.YunzhiEntity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,7 +14,7 @@ import javax.persistence.Id;
  */
 
 @Entity
-public class User {
+public class User extends YunzhiBase implements YunzhiEntity {
     @Id
     private Long id;
 
@@ -87,6 +88,7 @@ public class User {
     public Boolean getSex() {
         return sex;
     }
+
 
 
     public void setId(Long id) {

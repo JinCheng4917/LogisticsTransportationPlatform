@@ -12,6 +12,11 @@ public class Orders {
     @OneToOne
     private TheDriver theDriver;
 
+    private String goodsName;
+
+    @OneToOne
+    private GoodsType goodsType;
+
     @OneToOne
     private Owner owner;
 
@@ -31,6 +36,14 @@ public class Orders {
 
     public TheDriver getDirver() {
         return theDriver;
+    }
+
+    public String getGoodsName() {
+        return goodsName;
+    }
+
+    public GoodsType getGoodsType() {
+        return goodsType;
     }
 
     public Long getStatus() {
@@ -87,5 +100,13 @@ public class Orders {
 
     public void setStatus(Long status) {
         this.status = status;
+    }
+
+    public void setGoodsName(String goodsName) {
+        this.goodsName = goodsName;
+    }
+
+    public void setGoodsType(GoodsType goodsType) {
+        this.goodsType = goodsType;
     }
 }
