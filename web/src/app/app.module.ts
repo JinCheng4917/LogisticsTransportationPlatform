@@ -12,11 +12,13 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {YunzhiInterceptor} from './net/yunzhi.interceptor';
 import { AccountComponent } from './pages/account/account.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { OrderManageComponent } from './pages/driver/order-manage/order-manage.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    AccountComponent
+    AccountComponent,
+    OrderManageComponent
   ],
   imports: [
     BrowserModule,

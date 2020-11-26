@@ -38,6 +38,26 @@ public class OrdersController {
         return this.orderService.update(id, orders);
     }
 
+    /**
+     * 保存订单
+     * @param
+     * @return
+     */
+    @PutMapping("update/{id}")
+    public Orders update(@PathVariable Long id, @RequestBody Integer status) {
+        return this.orderService.updateStatus(id, status);
+    }
+
+    /**
+     * 保存订单
+     * @param
+     * @return
+     */
+    @PutMapping("complete/{id}")
+    public Orders complete(@PathVariable Long id, @RequestBody Orders orders) {
+        return this.orderService.complete(id, orders);
+    }
+
     @GetMapping("{id}")
     public Orders getOrderById(@PathVariable Long id) {
         return this.orderService.getOrderById(id);
@@ -46,6 +66,21 @@ public class OrdersController {
     @GetMapping("page")
     public Page<Orders> page(@RequestParam int page, @RequestParam int size) {
         return this.orderService.findAll(PageRequest.of(page, size));
+    }
+
+    @GetMapping("pageById")
+    public Page<Orders> pageById(@RequestParam int page, @RequestParam int size) {
+        return this.orderService.findAllById(PageRequest.of(page, size));
+    }
+
+    @GetMapping("pageByStatus")
+    public Page<Orders> pageByStatus(@RequestParam int status, @RequestParam int page, @RequestParam int size) {
+        return this.orderService.findAllByStatus( status, PageRequest.of(page, size));
+    }
+
+    @GetMapping("pageByDriver")
+    public Page<Orders> pageByDriver(@RequestParam int page, @RequestParam int size) {
+        return this.orderService.findAllByDriver(PageRequest.of(page, size));
     }
 
     @DeleteMapping("{id}")

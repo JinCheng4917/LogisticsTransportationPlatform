@@ -8,7 +8,9 @@
     <th scope="col">运输目的地</th>
     <th scope="col">运费(单位：元)</th>
     <th scope="col">发布人</th>
+    <th scope="col">状态</th>
     <th scope="col">发布时间</th>
+    <th scope="col">结束时间</th>
     <th scope="col">操作</th>
   </tr>
   </thead>
@@ -21,11 +23,19 @@
     <td>{{order.endPlace}}</td>
     <td>{{order.freight}}</td>
     <td>{{order.owner.user.name}}</td>
+    <td  [style.color]="getFontColor(order.status)">{{order.status | status}}</td>
     <td>{{order.startTime |  date:"yyyy/MM/dd HH:mm:ss" }}</td>
+    <td>{{order.endTime |  date:"yyyy/MM/dd HH:mm:ss" }}</td>
     <td>
-      <button type="button" class="btn btn-info btn-sm" (click)="college(order)">
-        <i class="fas fa-luggage-cart"></i>
-        揽收
+      <button class="btn btn-info btn-sm mr-2" routerLink="/driverOrderManage/view/{{order.id}}" [disabled]="order.status === 3">
+        <i class="fas fa-tasks"></i>
+        变更状态
+      </button>
+      <button class="btn btn-danger btn-sm mr-2" *ngIf="order.status === 1">
+        取消订单
+      </button>
+      <button class="btn btn-danger btn-sm mr-2" *ngIf="order.status!== 1" [disabled]="order.status === 2">
+        删除订单
       </button>
     </td>
   </tr>

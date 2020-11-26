@@ -25,6 +25,18 @@ export class OrdersService {
   }
 
   /**
+   * 更新
+   */
+  updateStatus(orderId: number, status: number): Observable<Orders> {
+    return this.httpClient.put<Orders>(`${this.url}/update/${orderId.toString()}`, status);
+  }
+
+
+  completeOrder(orderId: number, order: Orders): Observable<Orders> {
+    return this.httpClient.put<Orders>(`${this.url}/complete/${orderId.toString()}`, order);
+  }
+
+  /**
    * 根据id获取订单
    * @param id  订单id
    */
@@ -52,6 +64,52 @@ export class OrdersService {
     };
 
     return this.httpClient.get<Page<Orders>>(`${this.url}/page`, {params});
+  }
+
+  /**
+   * 分页方法
+   * @param page 第几页
+   * @param size 每页条数
+   * @param userId 用户
+   */
+  public pageById(page: number, size: number): Observable<Page<Orders>> {
+    const params: { [key: string]: any } = {
+      page: String(page),
+      size: String(size),
+    };
+
+    return this.httpClient.get<Page<Orders>>(`${this.url}/pageById`, {params});
+  }
+
+  /**
+   * 分页方法
+   * @param page 第几页
+   * @param size 每页条数
+   * @param userId 用户
+   */
+  public pageByStatus(status: number, page: number, size: number): Observable<Page<Orders>> {
+    const params: { [key: string]: any } = {
+      status: Number(status),
+      page: String(page),
+      size: String(size),
+    };
+
+    return this.httpClient.get<Page<Orders>>(`${this.url}/pageByStatus`, {params});
+  }
+
+  /**
+   * 分页方法
+   * @param page 第几页
+   * @param size 每页条数
+   * @param userId 用户
+   */
+  public pageByDriver(page: number, size: number): Observable<Page<Orders>> {
+    const params: { [key: string]: any } = {
+      page: String(page),
+      size: String(size),
+    };
+
+    return this.httpClient.get<Page<Orders>>(`${this.url}/pageByDriver`, {params});
   }
 
 }

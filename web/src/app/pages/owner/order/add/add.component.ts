@@ -6,6 +6,8 @@ import {Orders} from '../../../../func/Orders';
 import {CommonService} from '../../../../service/common.service';
 import {GoodsType} from '../../../../func/GoodsType';
 import {OrdersService} from '../../../../service/orders.service';
+import {AuthService} from '../../../../service/auth.service';
+import {User} from '../../../../func/User';
 
 
 @Component({
@@ -17,11 +19,13 @@ export class AddComponent implements OnInit {
   ordersForm: FormGroup;
   show = false;
   submitting = false;
+  currentUser: User;
 
   constructor(private builder: FormBuilder,
               private commonService: CommonService,
               private router: Router,
               private ordersService: OrdersService,
+              private authService: AuthService,
               private httpClient: HttpClient) {}
 
   public initForm(): void {
@@ -36,6 +40,10 @@ export class AddComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.authService.getCurrentLoginUser$()
+      .subscribe((user: User) => {
+        this.currentUser = user;
+      });
     this.initForm();
   }
 

@@ -3,6 +3,7 @@
  */
 import {GoodsType} from './GoodsType';
 import {CarType} from './CarType';
+import {User} from './User';
 
 export class Driver {
   /** id */
@@ -15,13 +16,14 @@ export class Driver {
 
   carType: CarType;
 
+  user: User;
+
   phone: string;
 
   licensePlateNumber: string;
 
   company: string;
 
-  IDNumber: string;
 
 
   constructor(param?: {
@@ -30,19 +32,19 @@ export class Driver {
     goodsType?: GoodsType,
     carType: CarType;
     phone: string;
+    user: User;
     licensePlateNumber: string;
     company: string;
-    IDNumber: string;
   }) {
     if (param) {
       this.name = param.name;
       this.id = param.id;
       this.goodsType = param.goodsType;
       this.carType = param.carType;
+      this.user = param.user;
       this.phone = param.phone;
       this.licensePlateNumber = param.licensePlateNumber;
       this.company = param.company;
-      this.IDNumber = param.IDNumber;
     }
   }
 }

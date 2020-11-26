@@ -32,6 +32,24 @@ public interface OrderService {
      */
     Orders update(Long id, Orders orders);
 
+
+    /**
+     * 更新
+     *
+     * @param id   订单Id
+     * @return 新订单
+     */
+    Orders updateStatus(Long id, Integer status);
+
+    /**
+     * 更新
+     *
+     * @param id   订单Id
+     * @param orders
+     * @return 新订单
+     */
+    Orders complete(Long id, Orders orders);
+
     /**
      * 删除
      *
@@ -41,4 +59,11 @@ public interface OrderService {
 
 
     Page<Orders> findAll(Pageable pageable);
+
+    Page<Orders> findAllById(Pageable pageable);
+
+    Page<Orders> findAllByStatus(int status,Pageable pageable);
+
+    Page<Orders> findAllByDriver(Pageable pageable);
+
 }

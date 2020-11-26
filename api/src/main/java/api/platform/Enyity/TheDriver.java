@@ -15,6 +15,9 @@ public class TheDriver implements YunzhiEntity {
     @OneToOne
     private GoodsType goodsType;
 
+    @OneToOne
+    private User user;
+
     private String licensePlateNumber;
 
     public Long getId() {
@@ -33,6 +36,10 @@ public class TheDriver implements YunzhiEntity {
         return licensePlateNumber;
     }
 
+    public User getUser() {
+        return user;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -47,5 +54,9 @@ public class TheDriver implements YunzhiEntity {
 
     public void setLicensePlateNumber(String licensePlateNumber) {
         this.licensePlateNumber = licensePlateNumber;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

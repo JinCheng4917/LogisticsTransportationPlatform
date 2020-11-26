@@ -2,13 +2,19 @@ package api.platform.Enyity;
 
 import com.mengyunzhi.core.entity.YunzhiEntity;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
 public class Orders implements YunzhiEntity {
+
+    public static final int NOT_COLLECTED = 0;
+    public static final int COLLECTED = 1;
+    public static final int TRANSFORM = 2;
+    public static final int COMPLETE = 3;
+
+
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
@@ -27,15 +33,12 @@ public class Orders implements YunzhiEntity {
     @CreationTimestamp
     private Timestamp startTime;
 
-    @UpdateTimestamp
-    private Timestamp updateTime;
 
+    private Double freight;
 
-    private String freight;
+    private String endTime = "";
 
-    private String endTime;
-
-    private Long status;
+    private Integer status;
 
     private String startPlace;
 
@@ -45,7 +48,7 @@ public class Orders implements YunzhiEntity {
         return id;
     }
 
-    public TheDriver getDirver() {
+    public TheDriver getDriver() {
         return theDriver;
     }
 
@@ -57,7 +60,7 @@ public class Orders implements YunzhiEntity {
         return goods;
     }
 
-    public Long getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
@@ -65,7 +68,7 @@ public class Orders implements YunzhiEntity {
         return owner;
     }
 
-    public String getFreight() {
+    public Double getFreight() {
         return freight;
     }
 
@@ -89,11 +92,11 @@ public class Orders implements YunzhiEntity {
         this.id = id;
     }
 
-    public void setDirver(TheDriver theDriver) {
+    public void setDriver(TheDriver theDriver) {
         this.theDriver = theDriver;
     }
 
-    public void setFreight(String freight) {
+    public void setFreight(Double freight) {
         this.freight = freight;
     }
 
@@ -117,7 +120,7 @@ public class Orders implements YunzhiEntity {
         this.startTime = startTime;
     }
 
-    public void setStatus(Long status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 

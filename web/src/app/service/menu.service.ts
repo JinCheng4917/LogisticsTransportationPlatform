@@ -9,7 +9,8 @@ export class MenuService {
   private menusSubject = new BehaviorSubject<Array<Menu>>([
     new Menu({name: '首页', icon: 'fas fa-car', url: 'dashboard', roles: [Menu.ROLE_OWNER, Menu.ROLE_DRIVER]}),
     new Menu({name: '订单管理', icon: 'fas fa-clipboard-list', url: 'order', roles: [Menu.ROLE_OWNER]}),
-    new Menu({name: '订单接收', icon: 'fas fa-clipboard-list', url: 'driverOrder', roles: [Menu.ROLE_DRIVER]}),
+    new Menu({name: '订单揽收', icon: 'fas fa-clipboard-list', url: 'driverOrder', roles: [Menu.ROLE_DRIVER]}),
+    new Menu({name: '订单管理', icon: 'far fa-calendar-alt', url: 'driverOrderManage', roles: [Menu.ROLE_DRIVER]}),
     new Menu({name: '账户管理', icon: 'far fa-credit-card',  url: 'account', roles: [Menu.ROLE_DRIVER, Menu.ROLE_OWNER]}),
     new Menu({name: '个人中心', icon: 'fas fa-user',  url: 'personalCenter', roles: [Menu.ROLE_OWNER, Menu.ROLE_DRIVER]})
   ]);

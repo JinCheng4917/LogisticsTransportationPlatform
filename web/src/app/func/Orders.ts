@@ -3,6 +3,7 @@
  */
 import {GoodsType} from './GoodsType';
 import {Driver} from './Driver';
+import {Owner} from './Owner';
 
 export class Orders {
   /** id */
@@ -27,10 +28,12 @@ export class Orders {
   /**
    * 运费
    */
-  freight: string;
+  freight: number;
 
   /** 司机 */
   driver: Driver;
+
+  owner: Owner;
 
   /** 发布时间 */
   startTime: string;
@@ -45,7 +48,7 @@ export class Orders {
     goods?: GoodsType;
     startPlace?: string;
     endPlace?: string;
-    freight?: string;
+    freight?: number;
     driver?: Driver;
     startTime?: string;
     engTime?: string;

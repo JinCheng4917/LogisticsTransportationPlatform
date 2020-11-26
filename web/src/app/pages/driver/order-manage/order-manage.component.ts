@@ -1,23 +1,23 @@
-import {Component, OnInit} from '@angular/core';
-import {CommonService} from '../../../service/common.service';
-import {OrdersService} from '../../../service/orders.service';
+import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {Orders} from '../../../func/Orders';
-import {Page} from '../../../base/page';
-import {UnknownProperty} from '../../../core/secondUtils';
-import {config} from '../../../conf/app.conf';
-import {HttpErrorResponse} from '@angular/common/http';
-import {UserService} from '../../../service/user.service';
 import {User} from '../../../func/User';
+import {CommonService} from '../../../service/common.service';
+import {UserService} from '../../../service/user.service';
+import {OrdersService} from '../../../service/orders.service';
+import {HttpErrorResponse} from '@angular/common/http';
+import {config} from '../../../conf/app.conf';
+import {UnknownProperty} from '../../../core/secondUtils';
 
 @Component({
-  selector: 'app-user',
-  templateUrl: './order.component.html',
-  styleUrls: ['./order.component.scss']
+  selector: 'app-order-manage',
+  templateUrl: './order-manage.component.html',
+  styleUrls: ['./order-manage.component.scss']
 })
-export class OrderComponent implements OnInit {
+export class OrderManageComponent implements OnInit {
 
   orderForm: FormGroup;
+  status: number;
   searchButtonSubmitting = false;
   importButtonSubmitting = false;
   fontColor = '';
@@ -63,27 +63,11 @@ export class OrderComponent implements OnInit {
     this.pageAll();
   }
 
-  public delete(order: Orders): void {
-    // 确认框
-    this.commonService.confirm((confirm: boolean) => {
-      if (confirm) {
-        this.ordersService.delete(order.id).subscribe(() => {
-          this.commonService.success(() => {
-          }, '删除成功');
-          this.pageAll();
-        }, (response: HttpErrorResponse) => {
-          this.commonService.httpError(response);
-        });
-      }
-    }, '即将删除订单');
-  }
-
   public pageAll(): void {
-    this.ordersService.pageById(this.params.page,
+    this.ordersService.pageByDriver(this.params.page,
       this.params.size)
       .subscribe((response: { totalPages: number, content: Array<Orders> }) => {
         this.orders = response;
-        console.log(response);
         // this.pages = this.makePagesByTotalPages(this.params.page, response.totalPages);
       });
   }
@@ -154,14 +138,6 @@ export class OrderComponent implements OnInit {
     }
     return this.fontColor;
   }
-
-  /**
-   * 点击分页按钮
-   * @param page 要请求的页码
-   */
-  onPage(page: number): void {
-    this.params.page = page;
-    this.pageAll();
-  }
 }
+
 

@@ -39,6 +39,13 @@ const routes: Routes = [
         }
       },
       {
+        path: 'driverOrderManage',
+        loadChildren: () => import('./pages/driver/order-manage/orderManage.module').then(m => m.OrderManageModule),
+        data: {
+          title: '查看订单'
+        }
+      },
+      {
         path: 'account',
         loadChildren: () => import('./pages/account/account.module').then(m => m.AccountModule),
         data: {

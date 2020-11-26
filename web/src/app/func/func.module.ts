@@ -3,13 +3,16 @@ import { GoodsSelectorComponent } from './selecter/goods-selector/goods-selector
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {HttpClientModule} from '@angular/common/http';
+import {StatusPipe} from './pipe/Status.pipe';
 @NgModule({
-  declarations: [
-    GoodsSelectorComponent
-  ],
-  exports: [
-    GoodsSelectorComponent
-  ],
+    declarations: [
+        GoodsSelectorComponent,
+        StatusPipe
+    ],
+    exports: [
+        GoodsSelectorComponent,
+        StatusPipe
+    ],
   imports: [
     CommonModule,
     HttpClientModule,

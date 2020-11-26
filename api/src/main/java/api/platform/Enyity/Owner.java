@@ -22,7 +22,6 @@ public class Owner implements YunzhiEntity {
     @OneToOne
     private GoodsType goodsType;
 
-    private String IDCard;
 
     public Long getId() {
         return id;
@@ -40,10 +39,6 @@ public class Owner implements YunzhiEntity {
         return goodsType;
     }
 
-    public String getIDCard() {
-        return IDCard;
-    }
-
     public void setId(Long id) {
         this.id = id;
     }
@@ -54,10 +49,6 @@ public class Owner implements YunzhiEntity {
 
     public void setGoodsType(GoodsType goodsType) {
         this.goodsType = goodsType;
-    }
-
-    public void setIDCard(String IDCard) {
-        this.IDCard = IDCard;
     }
 
     public void setUser(User user) {

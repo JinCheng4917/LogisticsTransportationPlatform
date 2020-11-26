@@ -32,16 +32,16 @@
     <td>{{order.startPlace}}</td>
     <td>{{order.endPlace}}</td>
     <td>{{order.freight}}</td>
-    <td>{{order.startTime |  date:"yyyy-MM-dd" }}</td>
-    <td>{{order.endTime}}</td>
-    <td>{{order.status}}</td>
-    <td>{{order.driver}}</td>
+    <td>{{order.startTime |  date:"yyyy/MM/dd HH:mm:ss" }}</td>
+    <td>{{order.endTime |  date:"yyyy/MM/dd HH:mm:ss" }}</td>
+    <td>{{order.driver?.user.name}}</td>
+    <td [style.color]="getFontColor(order.status)">{{order.status | status}}</td>
     <td>
-      <a class="btn btn-primary btn-sm mr-2" routerLink="/order/edit/{{order.id}}">
+      <button class="btn btn-primary btn-sm mr-2" routerLink="/order/edit/{{order.id}}" [disabled]="order.status === 3">
         <i class="fas fa-edit"></i>
         编辑
-      </a>
-      <button type="button" class="btn btn-danger btn-sm" (click)="delete(order)">
+      </button>
+      <button type="button" class="btn btn-danger btn-sm" (click)="delete(order)" [disabled]="order.status === 2">
         <i class="fas fa-trash-alt"></i>
         删除
       </button>

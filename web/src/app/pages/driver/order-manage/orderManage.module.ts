@@ -2,16 +2,16 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { FuncModule } from '../../../func/func.module';
-import {DOrdersComponent} from './dOrders.component';
-import {DOrderRoutingModule} from './dOrder-routing.module';
+import { ViewComponent } from './view/view.component';
+import {OrderManageRoutingModule} from './orderManage-routing.module';
 
 
 
 @NgModule({
-  declarations: [DOrdersComponent],
+  declarations: [ ViewComponent],
   imports: [
     CommonModule,
-    DOrderRoutingModule,
+    OrderManageRoutingModule,
     ReactiveFormsModule,
     FuncModule,
     FormsModule
@@ -20,5 +20,5 @@ import {DOrderRoutingModule} from './dOrder-routing.module';
     // })
   ]
 })
-export class DOrderModule {
+export class OrderManageModule {
 }

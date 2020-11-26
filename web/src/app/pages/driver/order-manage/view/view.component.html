@@ -1,0 +1,111 @@
+<form [formGroup]="orderForm">
+  <div class="row">
+    <div class="col-md-6 offset-md-1">
+      <div class="row mt-4">
+        <div class="col-md-4 form-text text-right">
+          <label>货物名称<code>*</code></label>
+        </div>
+        <div class="col-md-8">
+          <h4>{{order?.goodsName}}</h4>
+        </div>
+      </div>
+
+
+      <div class="row mt-5">
+        <div class="col-md-4 text-right">
+          <label>货物类型：</label>
+        </div>
+        <div class="col-md-8">
+          <div class="row">
+            <div class="col-md-8">
+              <div class="custom-control-inline">
+               <h4>{{order?.goods?.name}}</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-4">
+        <div class="col-md-4 form-text text-right">
+          <label>运输起点<code>*</code></label>
+        </div>
+        <div class="col-md-8">
+          <h4>{{order?.startPlace}}</h4>
+        </div>
+      </div>
+
+      <div class="row mt-4">
+        <div class="col-md-4 form-text text-right">
+          <label>运输目的地<code>*</code></label>
+        </div>
+        <div class="col-md-8">
+         <h4>{{order?.endPlace}}</h4>
+        </div>
+      </div>
+
+      <div class="row mt-4">
+        <div class="col-md-4 form-text text-right">
+          <label>运费<code>*</code></label>
+        </div>
+        <div class="col-md-8">
+          <h4>{{order?.freight}}</h4>
+        </div>
+      </div>
+      <div class="row mt-4">
+        <div class="col-md-4 form-text text-right">
+          <label>发布时间<code>*</code></label>
+        </div>
+        <div class="col-md-8">
+          <h4>{{order?.startTime |  date:"yyyy/MM/dd HH:mm:ss" }}</h4>
+        </div>
+      </div>
+
+      <div class="row mt-4">
+        <div class="col-md-4 form-text text-right">
+          <label>结束时间<code>*</code></label>
+        </div>
+        <div class="col-md-8">
+          <h4>{{order?.startTime |  date:"yyyy/MM/dd HH:mm:ss" }}</h4>
+        </div>
+      </div>
+
+      <div class="row mt-5">
+        <div class="col-md-4 text-right">
+          <label>货物状态：</label>
+        </div>
+        <div class="col-md-8">
+          <div class="row">
+            <div class="col-md-8">
+              <div class="custom-control-inline">
+                <h4 [style.color]="getFontColor(order.status)">{{order?.status | status}}</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-4">
+        <div class="col-md-4 form-text text-right">
+          <label>发布人<code>*</code></label>
+        </div>
+        <div class="col-md-8">
+          <h4>{{order?.owner?.user.name}}</h4>
+        </div>
+      </div>
+
+      <div class="row mt-5">
+        <div class="col-md-8 offset-md-3">
+          <button class="btn btn-info btn-sm" (click)="transfer(order)" [disabled]="order.status === 2 || order.status === 3">
+            <i class="fas fa-truck-moving"></i>
+            &nbsp;开始运输
+          </button>
+          <button class="btn btn-danger btn-sm offset-md-3" (click)="complete(order)" [disabled]="order.status === 3">
+            <i class="fas fa-people-carry"></i>
+            &nbsp;完成运输
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
