@@ -17,25 +17,31 @@
     <th scope="col">运输起点</th>
     <th scope="col">运输目的地</th>
     <th scope="col">运费(单位：元)</th>
+    <th scope="col">发布时间</th>
+    <th scope="col">结束时间</th>
     <th scope="col">运输司机</th>
+    <th scope="col">状态</th>
     <th scope="col">操作</th>
   </tr>
   </thead>
   <tbody>
-  <tr>
-    <td>1</td>
-    <td>蔬菜</td>
-    <td>果蔬类</td>
-    <td>河北省石家庄市</td>
-    <td>天津市北辰区河北工业大学</td>
-    <td>1000.00</td>
-    <td>张三</td>
+  <tr *ngFor="let order of orders.content; let $index = index;">
+    <td>{{$index + 1}}</td>
+    <td>{{order.goodsName}}</td>
+    <td>{{order?.goods?.name}}</td>
+    <td>{{order.startPlace}}</td>
+    <td>{{order.endPlace}}</td>
+    <td>{{order.freight}}</td>
+    <td>{{order.startTime |  date:"yyyy-MM-dd" }}</td>
+    <td>{{order.endTime}}</td>
+    <td>{{order.status}}</td>
+    <td>{{order.driver}}</td>
     <td>
-      <a class="btn btn-primary btn-sm mr-2" routerLink="/order/edit/">
+      <a class="btn btn-primary btn-sm mr-2" routerLink="/order/edit/{{order.id}}">
         <i class="fas fa-edit"></i>
         编辑
       </a>
-      <button type="button" class="btn btn-danger btn-sm">
+      <button type="button" class="btn btn-danger btn-sm" (click)="delete(order)">
         <i class="fas fa-trash-alt"></i>
         删除
       </button>

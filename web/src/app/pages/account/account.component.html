@@ -1,0 +1,61 @@
+
+<div class="row mt-2">
+  <div class="col-md-4 offset-md-2">
+    <div class="row">
+      <div class="col-md-4 text-right">
+        <label for="name">姓名：</label>
+      </div>
+      <div class="col-md-8">
+        <div id="name">
+          {{currentUser?.name}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="row mt-2">
+  <div class="col-md-4 offset-md-2">
+    <div class="row">
+      <div class="col-md-4 text-right">
+        <label for="phone">电话：</label>
+      </div>
+      <div class="col-md-8">
+        <div id="phone">
+          {{currentUser?.username}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mt-2">
+  <div class="col-md-4 offset-md-2">
+    <div class="row">
+      <div class="col-md-4 text-right">
+        <label for="quota">余额：</label>
+      </div>
+      <div class="col-md-8">
+        <div id="quota">
+          {{currentUser?.quota}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="row mt-4">
+  <div class="col-md-4 offset-md-2">
+    <div class="row">
+      <div class="col-md-8 offset-md-2">
+        <a class="btn btn-primary btn-sm mr-2" routerLink="/account/add">
+          <i class="fas fa-edit"></i>
+          账户充值
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

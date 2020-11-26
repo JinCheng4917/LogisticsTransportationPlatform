@@ -9,10 +9,10 @@ export class Orders {
   id: number;
 
   /** 名称 */
-  name: string;
+  goodsName: string;
 
   /** 类型 */
-  goodsType: GoodsType;
+  goods: GoodsType;
 
   /**
    * 初始地
@@ -33,27 +33,35 @@ export class Orders {
   driver: Driver;
 
   /** 发布时间 */
-  putTime: string;
+  startTime: string;
+
+  endTime: string;
+
+  status: number;
 
   constructor(param?: {
     name?: string,
     id?: number,
-    goodsType: GoodsType;
-    startPlace: string;
-    endPlace: string;
-    freight: string;
-    driver: Driver;
-    putTime: string;
+    goods?: GoodsType;
+    startPlace?: string;
+    endPlace?: string;
+    freight?: string;
+    driver?: Driver;
+    startTime?: string;
+    engTime?: string;
+    status?: number;
   }) {
     if (param) {
-      this.name = param.name;
+      this.goodsName = param.name;
       this.id = param.id;
-      this.goodsType = param.goodsType;
+      this.goods = param.goods;
       this.startPlace = param.startPlace;
       this.endPlace = param.endPlace;
       this.freight = param.freight;
       this.driver = param.driver;
-      this.putTime = param.putTime;
+      this.startTime = param.startTime;
+      this.endTime = param.engTime;
+      this.status = param.status;
     }
   }
 }

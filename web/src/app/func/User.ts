@@ -2,8 +2,8 @@
  * 用户实体
  */
 export class User {
-  static ROLE_TEACHER = 0;
-  static ROLE_STUDENT = 1;
+  static ROLE_OWNER = 0;
+  static ROLE_DRIVER = 1;
   /** id */
   id: number;
 
@@ -22,13 +22,20 @@ export class User {
   /** 是否为admin */
   admin: boolean;
 
-  constructor(data?: { id?: number, name?: string, username?: string, password?: string, role?: number, admin?: boolean}) {
+  quota: number;
+
+  idnumber: string;
+
+  constructor(data?:
+                { id?: number, name?: string, username?: string,
+                  password?: string, role?: number, admin?: boolean,
+                  quota?: number, idnumber?: string}) {
     if (data) {
       if (data.id) {
         this.id = data.id;
       }
 
-    if (data.name) {
+      if (data.name) {
       this.name = data.name;
     }
 
@@ -46,6 +53,13 @@ export class User {
 
       if (data.admin) {
         this.admin = data.admin;
+      }
+
+      if (data.quota) {
+        this.quota = data.quota;
+      }
+      if (data.idnumber) {
+        this.idnumber = data.idnumber;
       }
     }
 

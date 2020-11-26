@@ -24,7 +24,7 @@ export class UserService {
     this.getCurrentLoginUser();
   }
 
-  private getCurrentLoginUser() {
+  private getCurrentLoginUser(): void {
     const appOnReadyItem = this.commonService.getAppOnReadyItem();
 
     this.httpClient.get<User>(`${this.url}/me`)
@@ -127,6 +127,14 @@ export class UserService {
     vUser.password = oldPassword;
     vUser.newPassword = encodeURIComponent(newPassword);
     return this.httpClient.put<void>(`${this.url}/updatePassword`, vUser);
+  }
+
+  /**
+   * 更新
+   */
+  public update(userId: number, user: User): Observable<User> {
+    console.log(user);
+    return this.httpClient.put<User>(`${this.url}/${userId.toString()}`, user);
   }
 
   /**

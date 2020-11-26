@@ -4,10 +4,10 @@ package api.platform.Enyity;
 import api.platform.Service.BeanService;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.mengyunzhi.core.entity.YunzhiEntity;
+import org.hibernate.annotations.CreationTimestamp;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.sql.Timestamp;
 
 /**
  * 用户
@@ -16,6 +16,7 @@ import javax.persistence.Id;
 @Entity
 public class User extends YunzhiBase implements YunzhiEntity {
     @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
 
@@ -34,7 +35,7 @@ public class User extends YunzhiBase implements YunzhiEntity {
     /**
      * 角色
      */
-    private Long roles;
+    private Long role;
 
     /**
      * 电话
@@ -48,11 +49,18 @@ public class User extends YunzhiBase implements YunzhiEntity {
      */
     private Boolean sex = false;
 
+    private String IDNumber;
+
     /**
      * 用户名
      */
     @Column(nullable = false)
     private String username;
+
+    @CreationTimestamp
+    private Timestamp startTime;
+
+    private  Double quota = 0.00;
 
 
     /**
@@ -89,7 +97,17 @@ public class User extends YunzhiBase implements YunzhiEntity {
         return sex;
     }
 
+    public Timestamp getStartTime() {
+        return startTime;
+    }
 
+    public Double getQuota() {
+        return quota;
+    }
+
+    public String getIDNumber() {
+        return IDNumber;
+    }
 
     public void setId(Long id) {
         this.id = id;
@@ -111,16 +129,28 @@ public class User extends YunzhiBase implements YunzhiEntity {
         this.name = name;
     }
 
-    public void setRoles(Long roles) {
-        this.roles = roles;
+    public void setRole(Long role) {
+        this.role = role;
     }
 
     public void setSex(Boolean sex) {
         this.sex = sex;
     }
 
-    public Long getRoles() {
-        return roles;
+    public void setStartTime(Timestamp startTime) {
+        this.startTime = startTime;
+    }
+
+    public void setQuota(Double quota) {
+        this.quota = quota;
+    }
+
+    public void setIDNumber(String IDNumber) {
+        this.IDNumber = IDNumber;
+    }
+
+    public Long getRole() {
+        return role;
     }
 
     public interface RolesJsonView {

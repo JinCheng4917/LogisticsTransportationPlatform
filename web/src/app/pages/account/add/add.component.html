@@ -1,0 +1,52 @@
+<form [formGroup]="userForm" (ngSubmit)="submit()">
+  <div class="row">
+    <div class="col-md-6 offset-md-1">
+      <div class="row mt-4">
+        <div class="col-md-4 form-text text-right">
+          <label for="Name">用户名称</label>
+        </div>
+        <div class="col-md-8">
+          <input type="text" id="Name" class="form-control" formControlName="name">
+        </div>
+      </div>
+
+
+      <div class="row mt-4">
+        <div class="col-md-4 form-text text-right">
+          <label for="phone">用户手机号</label>
+        </div>
+        <div class="col-md-8">
+          <input type="text" id="phone" class="form-control" formControlName="phone">
+        </div>
+      </div>
+
+      <div class="row mt-4">
+        <div class="col-md-4 form-text text-right">
+          <label for="id">用户身份证号</label>
+        </div>
+        <div class="col-md-8">
+          <input type="text" id="id" class="form-control" formControlName="IDNumber">
+        </div>
+      </div>
+
+      <div class="row mt-4">
+        <div class="col-md-4 form-text text-right">
+          <label for="quota">充值金额</label>
+        </div>
+        <div class="col-md-8">
+          <input type="text" id="quota" class="form-control" formControlName="quota" placeholder="请输入充值金额"/>
+        </div>
+      </div>
+
+      <div class="row mt-5">
+        <div class="col-md-4 offset-md-4">
+          <button class="btn btn-primary btn-lg btn-block"
+                  type="submit">
+            <i class="far fa-save"></i>
+            &nbsp;保存
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

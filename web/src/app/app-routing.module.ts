@@ -32,6 +32,20 @@ const routes: Routes = [
         }
       },
       {
+        path: 'driverOrder',
+        loadChildren: () => import('./pages/driver/dOrders/dOrder.module').then(m => m.DOrderModule),
+        data: {
+          title: '订单管理'
+        }
+      },
+      {
+        path: 'account',
+        loadChildren: () => import('./pages/account/account.module').then(m => m.AccountModule),
+        data: {
+          title: '账户管理'
+        }
+      },
+      {
         path: 'personalCenter',
         loadChildren: () => import('./pages/personal-center/personal-center.module').then(m => m.PersonalCenterModule),
         data: {

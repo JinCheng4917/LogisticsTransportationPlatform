@@ -1,12 +1,13 @@
 package api.platform.Enyity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import com.mengyunzhi.core.entity.YunzhiEntity;
+
+import javax.persistence.*;
 
 @Entity
-public class Owner {
+public class Owner implements YunzhiEntity {
     @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
     /**

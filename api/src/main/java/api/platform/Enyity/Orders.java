@@ -1,12 +1,16 @@
 package api.platform.Enyity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import com.mengyunzhi.core.entity.YunzhiEntity;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Entity
-public class Orders {
+public class Orders implements YunzhiEntity {
     @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
     @OneToOne
@@ -15,12 +19,19 @@ public class Orders {
     private String goodsName;
 
     @OneToOne
-    private GoodsType goodsType;
+    private GoodsType goods;
 
     @OneToOne
     private Owner owner;
 
-    private String startTime;
+    @CreationTimestamp
+    private Timestamp startTime;
+
+    @UpdateTimestamp
+    private Timestamp updateTime;
+
+
+    private String freight;
 
     private String endTime;
 
@@ -42,8 +53,8 @@ public class Orders {
         return goodsName;
     }
 
-    public GoodsType getGoodsType() {
-        return goodsType;
+    public GoodsType getGoods() {
+        return goods;
     }
 
     public Long getStatus() {
@@ -52,6 +63,10 @@ public class Orders {
 
     public Owner getOwner() {
         return owner;
+    }
+
+    public String getFreight() {
+        return freight;
     }
 
     public String getEndPlace() {
@@ -66,7 +81,7 @@ public class Orders {
         return startPlace;
     }
 
-    public String getStartTime() {
+    public Timestamp getStartTime() {
         return startTime;
     }
 
@@ -76,6 +91,10 @@ public class Orders {
 
     public void setDirver(TheDriver theDriver) {
         this.theDriver = theDriver;
+    }
+
+    public void setFreight(String freight) {
+        this.freight = freight;
     }
 
     public void setEndPlace(String endPlace) {
@@ -94,7 +113,7 @@ public class Orders {
         this.startPlace = startPlace;
     }
 
-    public void setStartTime(String startTime) {
+    public void setStartTime(Timestamp startTime) {
         this.startTime = startTime;
     }
 
@@ -106,7 +125,7 @@ public class Orders {
         this.goodsName = goodsName;
     }
 
-    public void setGoodsType(GoodsType goodsType) {
-        this.goodsType = goodsType;
+    public void setGoods(GoodsType goods) {
+        this.goods = goods;
     }
 }

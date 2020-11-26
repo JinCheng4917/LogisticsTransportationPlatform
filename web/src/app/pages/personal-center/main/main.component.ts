@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {User} from '../../../func/User';
 import {UserService} from '../../../service/user.service';
+import {AuthService} from '../../../service/auth.service';
 
 @Component({
   selector: 'app-main',
@@ -14,10 +15,13 @@ export class MainComponent implements OnInit {
    */
   currentUser: User;
 
-  constructor(private userService: UserService) {
+  constructor(private authService: AuthService) {
   }
 
   ngOnInit(): void {
-    // this.currentUser = this.userService.getCurrentUser();
+    this.authService.getCurrentLoginUser$()
+      .subscribe((user: User) => {
+        this.currentUser = user;
+      });
   }
 }

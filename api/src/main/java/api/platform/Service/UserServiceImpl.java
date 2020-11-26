@@ -110,9 +110,11 @@ public class UserServiceImpl implements UserService{
     @Override
     public User update(Long id, User user) {
         User oldUser = this.getUserById(id);
-        oldUser.setUsername(user.getUsername());
+        oldUser.setUsername(user.getPhone());
         oldUser.setName(user.getName());
         oldUser.setSex(user.getSex());
+        oldUser.setQuota(user.getQuota() + oldUser.getQuota());
+        oldUser.setPhone(user.getPhone());
         return this.userRepository.save(oldUser);
     }
 

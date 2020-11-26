@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OrderRoutingModule } from './order-routing.module';
-import { ReactiveFormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { FuncModule } from '../../../func/func.module';
 import { AddComponent } from './add/add.component';
 import { EditComponent } from './edit/edit.component';
 import { OrderComponent } from './order.component';
+import {NgxAmapModule} from 'ngx-amap';
+import {BrowserModule} from '@angular/platform-browser';
 
 @NgModule({
   declarations: [OrderComponent, AddComponent, EditComponent],
@@ -14,6 +16,10 @@ import { OrderComponent } from './order.component';
     OrderRoutingModule,
     ReactiveFormsModule,
     FuncModule,
+    FormsModule
+    // NgxAmapModule.forRoot({
+    //   apiKey: '1c966914bda7a573909e2376cfe05b1d'
+    // })
   ]
 })
 export class OrderModule {

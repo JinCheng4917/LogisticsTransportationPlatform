@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../../service/auth.service';
+import {config} from '../../../conf/app.conf';
 
 @Component({
   selector: 'app-login',
@@ -49,6 +50,7 @@ export class LoginComponent implements OnInit {
               private activatedRoute: ActivatedRoute,
               private authService: AuthService,
               private router: Router) {
+    this.version = config.version;
 
   }
 
