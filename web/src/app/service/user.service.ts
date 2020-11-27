@@ -7,6 +7,8 @@ import {catchError, map, tap} from 'rxjs/operators';
 import {VUser} from '../base/vuser';
 import {AbstractControl, AsyncValidatorFn, FormGroup, ValidationErrors, ValidatorFn} from '@angular/forms';
 import {User} from '../func/User';
+import {Driver} from '../func/Driver';
+import {Owner} from '../func/Owner';
 
 @Injectable({
   providedIn: 'root'
@@ -70,6 +72,14 @@ export class UserService {
    */
   register(user: User): Observable<void> {
     return this.httpClient.post<void>(`${this.url}/register`, user);
+  }
+
+  registerDriver(driver: Driver): Observable<void> {
+    return this.httpClient.post<void>(`${this.url}/driverRegister`, driver);
+  }
+
+  registerOwner(owner: Owner): Observable<void> {
+    return this.httpClient.post<void>(`${this.url}/ownerRegister`, owner);
   }
 
   /**

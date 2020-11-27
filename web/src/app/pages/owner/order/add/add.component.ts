@@ -66,7 +66,6 @@ export class AddComponent implements OnInit {
 
 
   public saveOrder(order: Orders): void {
-    console.log(order);
     this.submitting = true;
     this.ordersService.save(order).subscribe(() => {
       this.submitting = false;
@@ -80,6 +79,13 @@ export class AddComponent implements OnInit {
   }
 
   submit(): void {
-    this.saveOrder(this.ordersForm.value);
+    if (this.ordersForm.get('freight').value > this.currentUser.quota) {
+      this.commonService.error(() => {
+        this.commonService.back();
+      }, '您的余额不足，请及时充值');
+
+    }else {
+      this.saveOrder(this.ordersForm.value);
+    }
   }
 }

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {CommonService} from '../../../service/common.service';
 import {OrdersService} from '../../../service/orders.service';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {Orders} from '../../../func/Orders';
 import {Page} from '../../../base/page';
 import {UnknownProperty} from '../../../core/secondUtils';
@@ -35,6 +35,14 @@ export class OrderComponent implements OnInit {
     content: new Array<Orders>()
   };
 
+  /* 查询参数 */
+  queryParams = {
+    page: 0,
+    status: undefined,
+    size: this.params.size,
+    startPlace: new FormControl(),
+    endPlace: new FormControl()
+  };
   private user: User;
 
   constructor(private builder: FormBuilder,
@@ -155,13 +163,59 @@ export class OrderComponent implements OnInit {
     return this.fontColor;
   }
 
-  /**
-   * 点击分页按钮
-   * @param page 要请求的页码
-   */
-  onPage(page: number): void {
+  onPageSelected(page: number): void {
     this.params.page = page;
     this.pageAll();
+  }
+
+  onSizeSelected(size: number): void {
+    config.size = size;
+    this.ngOnInit();
+  }
+
+
+  /**
+   * 加载数据
+   */
+  loadData(): void {
+    const queryParams = {
+      page: this.params.page,
+      size: config.size,
+      status: this.queryParams.status,
+      startPlace: this.queryParams.startPlace.value,
+      endPlace: this.queryParams.endPlace.value
+    };
+
+    this.ordersService.ownerQuery(queryParams)
+      .subscribe((response: { totalPages: number, content: Array<Orders> }) => {
+        this.orders = response;
+        // this.pages = this.makePagesByTotalPages(this.params.page, response.totalPages);
+      });
+  }
+
+  onQuery(): void {
+    this.loadData();
+  }
+  clear(): void {
+    this.queryParams.startPlace = new FormControl();
+    this.queryParams.endPlace = new FormControl();
+    this.loadData();
+  }
+
+  /**
+   * 单选框被用户点击时
+   * @param $event 弹射值
+   * @param reviewed 评阅状态码1默认2已评阅3未评阅
+   */
+  onCheckBoxChange($event: Event, reviewed: number): void {
+    switch (reviewed) {
+      case 0: this.queryParams.status = 0; break;
+      case 1: this.queryParams.status = 1; break;
+      case 2: this.queryParams.status = 2; break;
+      case 3: this.queryParams.status = 3; break;
+      case 4: this.queryParams.status = 4; break;
+    }
+    this.loadData();
   }
 }
 

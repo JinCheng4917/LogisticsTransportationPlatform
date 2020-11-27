@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {Orders} from '../func/Orders';
 import {Observable} from 'rxjs';
 import {Page} from '../base/page';
@@ -15,6 +15,82 @@ export class OrdersService {
   save(orders: Orders): any{
     console.log(orders);
     return this.httpClient.post(`${this.url}`, orders);
+  }
+
+  query(params: { startPlace?: string, endPlace?: string, page?: number, size?: number }): any {
+    /* 设置默认值 */
+    if (params.page === undefined) {
+      params.page = 0;
+    }
+    if (params.size === undefined) {
+      params.size = 10;
+    }
+
+    /* 初始化查询参数 */
+    const queryParams = new HttpParams()
+      .set('startPlace', params.startPlace ? params.startPlace : '')
+      .set('endPlace', params.endPlace ? params.endPlace : '')
+      .set('page', params.page.toString())
+      .set('size', params.size.toString());
+    const PARAM = {
+      startPlace: params.startPlace ? params.startPlace : '',
+      endPlace: params.endPlace ? params.endPlace : '',
+      page: params.page.toLocaleString(),
+      size: params.size.toLocaleString()
+    };
+    console.log(PARAM);
+
+    return this.httpClient.get<{ totalPages: number, content: Array<Orders> }>(`${this.url}/queryPlace`, {params: PARAM});
+
+  }
+
+  driverQuery(params: { startPlace?: string, endPlace?: string, page?: number, size?: number, status?: number }): any {
+    console.log(params);
+    /* 设置默认值 */
+    if (params.page === undefined) {
+      params.page = 0;
+    }
+    if (params.size === undefined) {
+      params.size = 10;
+    }
+    if (params.status === undefined) {
+      params.status = 0;
+    }
+    const PARAM = {
+      status: params.status.toLocaleString(),
+      startPlace: params.startPlace ? params.startPlace : '',
+      endPlace: params.endPlace ? params.endPlace : '',
+      page: params.page.toLocaleString(),
+      size: params.size.toLocaleString()
+    };
+    console.log(PARAM);
+
+    return this.httpClient.get<{ totalPages: number, content: Array<Orders> }>(`${this.url}/driverPlace`, {params: PARAM});
+
+  }
+
+  ownerQuery(params: { startPlace?: string, endPlace?: string, page?: number, size?: number, reviewed?: boolean ,  status?: number }): any {
+    /* 设置默认值 */
+    if (params.page === undefined) {
+      params.page = 0;
+    }
+    if (params.size === undefined) {
+      params.size = 10;
+    }
+    if (params.status === undefined) {
+      params.status = 4;
+    }
+    const PARAM = {
+      status: params.status.toLocaleString(),
+      startPlace: params.startPlace ? params.startPlace : '',
+      endPlace: params.endPlace ? params.endPlace : '',
+      page: params.page.toLocaleString(),
+      size: params.size.toLocaleString()
+    };
+    console.log(PARAM);
+
+    return this.httpClient.get<{ totalPages: number, content: Array<Orders> }>(`${this.url}/ownerPlace`, {params: PARAM});
+
   }
 
   /**

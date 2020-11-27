@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {Orders} from '../../../func/Orders';
 import {User} from '../../../func/User';
 import {CommonService} from '../../../service/common.service';
@@ -33,6 +33,14 @@ export class DOrdersComponent implements OnInit {
   orders = {
     totalPages: 0,
     content: new Array<Orders>()
+  };
+
+  /* 查询参数 */
+  queryParams = {
+    page: 0,
+    size: this.params.size,
+    startPlace: new FormControl(),
+    endPlace: new FormControl()
   };
 
   private user: User;
@@ -152,6 +160,43 @@ export class DOrdersComponent implements OnInit {
       this.fontColor = '#df2e2e';
     }
     return this.fontColor;
+  }
+
+  onPageSelected(page: number): void {
+    this.params.page = page;
+    this.pageAll();
+  }
+
+  onSizeSelected(size: number): void {
+    config.size = size;
+    this.ngOnInit();
+  }
+
+  /**
+   * 加载数据
+   */
+  loadData(): void {
+    const queryParams = {
+      page: this.params.page,
+      size: config.size,
+      startPlace: this.queryParams.startPlace.value,
+      endPlace: this.queryParams.endPlace.value
+    };
+
+    this.ordersService.query(queryParams)
+      .subscribe((response: { totalPages: number, content: Array<Orders> }) => {
+        this.orders = response;
+        // this.pages = this.makePagesByTotalPages(this.params.page, response.totalPages);
+      });
+  }
+
+  onQuery(): void {
+    this.loadData();
+  }
+  clear(): void {
+    this.queryParams.startPlace = new FormControl();
+    this.queryParams.endPlace = new FormControl();
+    this.loadData();
   }
 }
 

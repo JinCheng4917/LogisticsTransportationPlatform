@@ -23,5 +23,8 @@ export class MainComponent implements OnInit {
       .subscribe((user: User) => {
         this.currentUser = user;
       });
+    if (this.currentUser.role === 1) {
+
+    }
   }
 }
