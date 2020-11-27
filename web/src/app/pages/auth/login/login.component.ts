@@ -1,69 +1,97 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from '../../../service/auth.service';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {UserService} from '../../../service/user.service';
+import {HttpErrorResponse} from '@angular/common/http';
+import {AuthService} from '../../../service/auth.service';
+import {Router} from '@angular/router';
+import {Driver} from '../../../func/Driver';
+import {CommonService} from '../../../service/common.service';
+import {Owner} from '../../../func/Owner';
 import {config} from '../../../conf/app.conf';
+import {GoodsType} from '../../../func/GoodsType';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
-  showUpdateBowerTips: boolean;
+export class LoginComponent implements OnInit, OnDestroy{
 
-  /** 表单对象 */
+  /** 当前模式 */
+  mode: string;
+
+  /** 登录表单对象 */
   loginForm: FormGroup;
 
-  /** 是否显示验证码选项 */
-  showValidateCode: boolean;
+  /** 注册表单对象 */
+  driverRegisterForm: FormGroup;
+  ownerRegisterForm: FormGroup;
 
-  /** 验证码按钮 是否禁用 */
-  verificationCodeButtonDisabled = true;
-
-  /** 验证码按钮提示信息 */
-  validateCodeInfo = '发送验证码';
-
-  /**
-   * 显示oneTimePassword
-   */
-  showOtpCode = false;
-
-  /**
-   * 是否显示超级密码输入框
-   */
-  showSuperToken = false;
+  version: string;
 
   /** 错误信息 */
   errorInfo: string;
 
-  /** 提交状态 */
-  submitting = false;
-
+  /** 显示错误信息 */
+  showErrorInfo: boolean;
   year = new Date().getFullYear();
 
-  version: string;
+  /** 注册错误信息 */
+  registerErrorInfo: string;
 
-  apiVersion: string;
+  /** 显示注册错误信息 */
+  showRegisterErrorInfo: boolean;
 
-  constructor(private builder: FormBuilder,
-              private activatedRoute: ActivatedRoute,
+  /** 注册提示信息 */
+  registerInfo: string;
+
+  /** 显示注册提示信息 */
+  showRegisterInfo: boolean;
+
+  projectConfig: {version: string};
+
+  constructor(private userService: UserService,
               private authService: AuthService,
-              private router: Router) {
+              private router: Router,
+              private commonService: CommonService,
+              private builder: FormBuilder) {
     this.version = config.version;
-
   }
 
   ngOnInit(): void {
+    // this.projectConfig = this.configService.config;
+    this.changeToLogin();
     /** 创建表单 */
     this.loginForm = this.builder.group({
-      username: ['', [Validators.minLength(5),
-        Validators.maxLength(20),
-        Validators.pattern('\\w+'),
-        Validators.required]],
+      username: ['', [Validators.required]],
       password: ['', Validators.required],
     });
-    this.errorInfo = '';
+    this.initDriverTable();
+    this.initOwnerTable();
+  }
+
+  initDriverTable(): void {
+    /** 创建司机注册表单 */
+    this.driverRegisterForm = this.builder.group({
+      name: [''],
+      phone: [''],
+      car: [''],
+      goods: null,
+      licensePlateNumber: [''],
+      password: [''],
+    });
+  }
+
+  initOwnerTable(): void {
+
+    /** 创建货主注册表单 */
+    this.ownerRegisterForm = this.builder.group({
+      name: [''],
+      phone: [''],
+      goods: null,
+      address: [''],
+      password: ['', Validators.required],
+    });
   }
 
   login(): void {
@@ -71,11 +99,108 @@ export class LoginComponent implements OnInit {
       .subscribe(() => {
         this.authService.requestCurrentLoginUser(() => {
           this.router.navigateByUrl('dashboard');
-      }); }, () => {
+        }); }, () => {
         this.errorInfo = '登录失败，请检查您的用户名、密码';
       });
   }
 
-  sendVerificationCode(): void {
+  bindGoods(goodsType: GoodsType): void {
+    if (goodsType && goodsType.id) {
+      // 合法，设置 college
+      this.ownerRegisterForm.patchValue({
+        goods: goodsType
+      });
+    } else {
+      this.ownerRegisterForm.patchValue({
+        goods: null
+      });
+    }
+  }
+
+  selectGoods(goodsType: GoodsType): void {
+    if (goodsType && goodsType.id) {
+      // 合法，设置 college
+      this.driverRegisterForm.patchValue({
+        goods: goodsType
+      });
+    } else {
+      this.driverRegisterForm.patchValue({
+        goods: null
+      });
+    }
+  }
+
+
+  changeToLogin(): void {
+    this.mode = 'login';
+  }
+
+  changeToRegister(): void {
+    this.mode = 'register';
+  }
+
+  changeToDriverRegister(): void {
+    this.mode = 'driverRegister';
+  }
+
+  changeToOwnerRegister(): void {
+    this.mode = 'ownerRegister';
+  }
+
+
+  ngOnDestroy(): void {
+  }
+  get username(): AbstractControl {
+    return this.loginForm.get('username');
+  }
+
+  get no(): AbstractControl {
+    return this.driverRegisterForm.get('no');
+  }
+
+  get name(): AbstractControl {
+    return this.driverRegisterForm.get('name');
+  }
+
+  driverRegister(): void {
+    const driver = new Driver();
+    driver.user.name = this.driverRegisterForm.get('name').value;
+    driver.user.password = this.driverRegisterForm.get('password').value;
+    driver.goodsType = this.driverRegisterForm.get('goods')?.value;
+    driver.carType = this.driverRegisterForm.get('car')?.value;
+    driver.user.username = this.driverRegisterForm.get('phone').value;
+    driver.licensePlateNumber = this.driverRegisterForm.get('licensePlateNumber').value;
+
+    console.log(driver);
+    this.userService.registerDriver(driver)
+      .subscribe(() => {
+        this.commonService.success(() => {
+          this.changeToLogin();
+        }, '注册成功');
+      }, (response: HttpErrorResponse) => {
+              this.registerErrorInfo = `${response.error.message}请尝试更换用户名或检查您的网络连接`;
+              this.showRegisterErrorInfo = true;
+            });
+  }
+
+  ownerRegister(): void {
+    const owner = new Owner();
+    owner.user.name = this.ownerRegisterForm.get('name').value;
+    owner.goodsType = this.ownerRegisterForm.get('goods')?.value;
+    owner.address = this.ownerRegisterForm.get('address').value;
+    owner.user.username = this.ownerRegisterForm.get('phone').value;
+    owner.user.password = this.ownerRegisterForm.get('password').value;
+
+    console.log(owner);
+    this.userService.registerOwner(owner)
+      .subscribe(() => {
+        this.commonService.success(() => {
+          this.changeToLogin();
+        }, '注册成功');
+      }, (response: HttpErrorResponse) => {
+        this.registerErrorInfo = `${response.error.message}请尝试更换用户名或检查您的网络连接`;
+        this.showRegisterErrorInfo = true;
+      });
   }
 }
+

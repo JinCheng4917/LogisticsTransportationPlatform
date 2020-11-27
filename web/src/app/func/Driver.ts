@@ -16,7 +16,7 @@ export class Driver {
 
   carType: CarType;
 
-  user: User;
+  user = new User();
 
   phone: string;
 

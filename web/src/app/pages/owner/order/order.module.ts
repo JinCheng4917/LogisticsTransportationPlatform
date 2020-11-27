@@ -8,19 +8,21 @@ import { EditComponent } from './edit/edit.component';
 import { OrderComponent } from './order.component';
 import {NgxAmapModule} from 'ngx-amap';
 import {BrowserModule} from '@angular/platform-browser';
+import {PartModule} from '../../../part/part.module';
 
 @NgModule({
   declarations: [OrderComponent, AddComponent, EditComponent],
-  imports: [
-    CommonModule,
-    OrderRoutingModule,
-    ReactiveFormsModule,
-    FuncModule,
-    FormsModule
-    // NgxAmapModule.forRoot({
-    //   apiKey: '1c966914bda7a573909e2376cfe05b1d'
-    // })
-  ]
+    imports: [
+        CommonModule,
+        OrderRoutingModule,
+        ReactiveFormsModule,
+        FuncModule,
+        FormsModule,
+        PartModule,
+        // NgxAmapModule.forRoot({
+        //   apiKey: '1c966914bda7a573909e2376cfe05b1d'
+        // })
+    ]
 })
 export class OrderModule {
 }

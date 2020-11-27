@@ -13,21 +13,22 @@ import {YunzhiInterceptor} from './net/yunzhi.interceptor';
 import { AccountComponent } from './pages/account/account.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { OrderManageComponent } from './pages/driver/order-manage/order-manage.component';
+import {ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
     AccountComponent,
-    OrderManageComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FuncModule,
-    PartModule,
-    HttpClientModule,
-    FontAwesomeModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        FuncModule,
+        PartModule,
+        HttpClientModule,
+        FontAwesomeModule,
+        ReactiveFormsModule
+    ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
