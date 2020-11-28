@@ -20,4 +20,33 @@ public interface OrderRepository extends PagingAndSortingRepository<Orders, Long
     Page<Orders> findAllByStatus(int status, Pageable pageable);
 
     Page<Orders> findAllByTheDriver(TheDriver theDriver, Pageable pageable);
+
+
+    default Page queryAll(String startPlace, String endPlace, @NotNull Pageable pageable) {
+        Assert.notNull(pageable, "传入的Pageable不能为null");
+
+        Specification<Orders> specification = OrdersSpecs.containingStartPlace(startPlace)
+                .and(OrdersSpecs.containingEndPlace(endPlace)).and(OrdersSpecs.isStatus(0L));
+        return this.findAll(specification, pageable);
+    }
+
+    default Page driverQueryAll(Long status, TheDriver theDriver, String startPlace, String endPlace, @NotNull Pageable pageable) {
+        Assert.notNull(pageable, "传入的Pageable不能为null");
+
+        Specification<Orders> specification = OrdersSpecs.containingStartPlace(startPlace)
+                .and(OrdersSpecs.containingEndPlace(endPlace))
+                .and(OrdersSpecs.isStatus(status)).and(OrdersSpecs.startWithDriver(theDriver));
+        return this.findAll(specification, pageable);
+    }
+
+    default Page ownerQueryAll(Long status, Owner owner, String startPlace, String endPlace, @NotNull Pageable pageable) {
+        Assert.notNull(pageable, "传入的Pageable不能为null");
+
+        Specification<Orders> specification = OrdersSpecs.containingStartPlace(startPlace)
+                .and(OrdersSpecs.containingEndPlace(endPlace))
+                .and(OrdersSpecs.isStatus(status)).and(OrdersSpecs.startWithOwner(owner));
+        return this.findAll(specification, pageable);
+    }
+
+
 }

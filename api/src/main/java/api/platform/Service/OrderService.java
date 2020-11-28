@@ -5,6 +5,7 @@ import api.platform.Enyity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 public interface OrderService {
@@ -32,6 +33,15 @@ public interface OrderService {
      */
     Orders update(Long id, Orders orders);
 
+    /**
+     * 更新
+     *
+     * @param id   订单Id
+     * @param orders
+     * @return 新订单
+     */
+    Orders defaultOrder(Long id, Orders orders);
+
 
     /**
      * 更新
@@ -50,6 +60,17 @@ public interface OrderService {
      */
     Orders complete(Long id, Orders orders);
 
+
+    /**
+     * 更新
+     *
+     * @param id   订单Id
+     * @param orders
+     * @return 新订单
+     */
+    Orders confirm(Long id, Orders orders);
+
+
     /**
      * 删除
      *
@@ -65,5 +86,23 @@ public interface OrderService {
     Page<Orders> findAllByStatus(int status,Pageable pageable);
 
     Page<Orders> findAllByDriver(Pageable pageable);
+
+    /**
+     * 综合查询
+     * @return
+     */
+    Page<Orders> quaryAll(String startPlace, String endPlace, @NotNull Pageable pageable);
+
+    /**
+     * 综合查询
+     * @return
+     */
+    Page<Orders> driverQuaryAll(Long status, String startPlace, String endPlace, @NotNull Pageable pageable);
+
+    /**
+     * 综合查询
+     * @return
+     */
+    Page<Orders> ownerQuaryAll(Long status, String startPlace, String endPlace, @NotNull Pageable pageable);
 
 }

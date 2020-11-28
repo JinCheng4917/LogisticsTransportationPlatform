@@ -12,5 +12,11 @@ export class DriverService {
   private currentLoginDriver: Driver;
   private url = 'driver';
   constructor(private commonService: CommonService,
-              private httpClient: HttpClient) { }
+              private httpClient: HttpClient) {
+  }
+
+  public getCurrentLoginDriver(): Observable<Driver> {
+    const appOnReadyItem = this.commonService.getAppOnReadyItem();
+    return this.httpClient.get<Driver>(`${this.url}/me`);
+  }
 }

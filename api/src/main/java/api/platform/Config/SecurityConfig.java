@@ -18,7 +18,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // 设置授权配置
                 .and().authorizeRequests()
                 // 开放登录接口
-                .antMatchers("/user/register").permitAll()
+                .antMatchers("/user/driverRegister").permitAll()
+                .antMatchers("/user/ownerRegister").permitAll()
                 // 任何请求都需要认证
                 .anyRequest().authenticated()
                 // 禁用 csrf

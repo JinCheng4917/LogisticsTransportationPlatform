@@ -3,14 +3,12 @@ package api.platform.Service;
 import api.platform.Enyity.Orders;
 import api.platform.Enyity.Owner;
 import api.platform.Enyity.TheDriver;
-import api.platform.Enyity.User;
 import api.platform.Repository.OrderRepository;
-import com.mengyunzhi.core.service.YunzhiService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.sql.Driver;
+import javax.validation.constraints.NotNull;
 
 @Service
 public class OrderServiceImpl implements OrderService{
@@ -54,6 +52,14 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
+    public Orders defaultOrder(Long id, Orders orders) {
+        Orders oldOrders = this.orderRepository.findById(id).get();
+        oldOrders.setStatus(0);
+        oldOrders.setDriver(null);
+        return this.orderRepository.save(oldOrders);
+    }
+
+    @Override
     public Orders updateStatus(Long id, Integer status) {
         Orders oldOrders = this.orderRepository.findById(id).get();
         oldOrders.setDriver(this.driverService.getCurrentLoginDriver());
@@ -64,11 +70,18 @@ public class OrderServiceImpl implements OrderService{
     @Override
     public Orders complete(Long id, Orders orders) {
         Orders oldOrders = this.orderRepository.findById(id).get();
+        oldOrders.setStatus(3);
+        return this.orderRepository.save(oldOrders);
+    }
+
+    @Override
+    public Orders confirm(Long id, Orders orders) {
+        Orders oldOrders = this.orderRepository.findById(id).get();
         TheDriver theDriver = oldOrders.getDriver();
         theDriver.getUser().setQuota(theDriver.getUser().getQuota() + oldOrders.getFreight());
         long deleteTime = System.currentTimeMillis();
         oldOrders.setEndTime(String.valueOf(deleteTime));
-        oldOrders.setStatus(3);
+        oldOrders.setStatus(4);
         return this.orderRepository.save(oldOrders);
     }
 
@@ -95,5 +108,29 @@ public class OrderServiceImpl implements OrderService{
     @Override
     public Page<Orders> findAllByDriver(Pageable pageable) {
         return this.orderRepository.findAllByTheDriver(this.driverService.getCurrentLoginDriver(), pageable);
+    }
+
+    @Override
+    public Page quaryAll(String startPlace, String endPlace, @NotNull Pageable pageable) {
+        TheDriver theDriver = this.driverService.getCurrentLoginDriver();
+        return this.orderRepository.queryAll(startPlace, endPlace, pageable);
+    }
+
+    @Override
+    public Page driverQuaryAll(Long status, String startPlace, String endPlace, @NotNull Pageable pageable) {
+        if (status == 0){
+            status = null;
+        }
+        TheDriver theDriver = this.driverService.getCurrentLoginDriver();
+        return this.orderRepository.driverQueryAll(status,theDriver,startPlace,endPlace,pageable);
+    }
+
+    @Override
+    public Page ownerQuaryAll(Long status, String startPlace, String endPlace, @NotNull Pageable pageable) {
+        if (status == 5){
+            status = null;
+        }
+        Owner owner = this.ownerService.getCurrentLoginOwner();
+        return this.orderRepository.ownerQueryAll(status,owner,startPlace,endPlace,pageable);
     }
 }

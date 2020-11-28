@@ -9,7 +9,7 @@ import javax.persistence.criteria.Expression;
 import java.sql.Driver;
 
 public class OrdersSpecs {
-    public static Specification<Orders> containingName(String startPlace) {
+    public static Specification<Orders> containingStartPlace(String startPlace) {
         if (startPlace != null) {
             return (Specification<Orders>) (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.like(root.get("startPlace").as(String.class), String.format("%%%s%%", startPlace));
         } else {
@@ -17,7 +17,7 @@ public class OrdersSpecs {
         }
     }
 
-    public static Specification<Orders> startWithNo(String endPlace) {
+    public static Specification<Orders> containingEndPlace(String endPlace) {
         if (endPlace == null) {
             return Specification.where(null);
         }

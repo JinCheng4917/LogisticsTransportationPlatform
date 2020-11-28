@@ -1,11 +1,11 @@
 package api.platform.Controller;
 
+import api.platform.Enyity.Owner;
+import api.platform.Enyity.TheDriver;
 import api.platform.Enyity.User;
 import api.platform.Input.PUser;
 import api.platform.Input.VUser;
-import api.platform.Security.YunzhiSecurityRole;
 import api.platform.Service.UserService;
-import com.fasterxml.jackson.annotation.JsonView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.ValidationException;
 import java.security.Principal;
+import java.sql.Driver;
 import java.util.List;
 
 /**
@@ -42,13 +43,11 @@ public class UserController {
     }
 
     @PostMapping
-    @Secured(YunzhiSecurityRole.ROLE_USER)
     public void add(@RequestBody User user) {
         this.userService.add(user);
     }
 
     @PostMapping("checkPasswordIsRight")
-    @Secured(YunzhiSecurityRole.ROLE_PERSONAL)
     public boolean checkPasswordIsRight(@RequestBody VUser vUser) {
         return this.userService.checkPasswordIsRight(vUser);
     }
@@ -79,38 +78,32 @@ public class UserController {
     }
 
     @DeleteMapping("{id}")
-    @Secured(YunzhiSecurityRole.ROLE_USER)
     public void delete(@PathVariable Long id) {
         this.userService.delete(id);
     }
 
     @GetMapping("existByPhone/{phoneNumber}")
-    @Secured(YunzhiSecurityRole.ROLE_USER)
     public Boolean existByPhone(@PathVariable String phoneNumber) {
         return this.userService.existByPhone(phoneNumber);
     }
 
     @GetMapping
-    @Secured({YunzhiSecurityRole.ROLE_USER})
     public List<User> getAll() {
         return this.userService.getAll();
     }
 
     @GetMapping("{id}")
-    @Secured(YunzhiSecurityRole.ROLE_USER)
     public User getUserById(@PathVariable Long id) {
         return this.userService.getUserById(id);
     }
 
     @GetMapping("isUsernameExist")
-    @Secured(YunzhiSecurityRole.ROLE_PERSONAL)
     public Boolean isUsernameExist(@RequestParam String username) {
         return this.userService.isUsernameExist(username);
     }
 
 
     @GetMapping("page")
-    @Secured(YunzhiSecurityRole.ROLE_USER)
     public Page<User> page(@RequestParam(required = false) String name,
                            @SortDefault.SortDefaults(@SortDefault(sort = "id", direction = Sort.Direction.DESC))
                                    Pageable pageable) {
@@ -118,26 +111,22 @@ public class UserController {
     }
 
     @PatchMapping("resetPassword/{id}")
-    @Secured(YunzhiSecurityRole.ROLE_USER)
     public void resetPassword(@PathVariable Long id) {
         this.userService.resetPassword(id);
     }
 
 
     @PutMapping("{id}")
-    @Secured(YunzhiSecurityRole.ROLE_USER)
     public User update(@PathVariable Long id, @RequestBody User user) {
         return this.userService.update(id, user);
     }
 
     @PutMapping("updatePassword")
-    @Secured(YunzhiSecurityRole.ROLE_PERSONAL)
     public void updatePassword(@RequestBody VUser vUser) throws ValidationException {
         this.userService.updatePassword(vUser);
     }
 
     @PutMapping("updatePhone")
-    @Secured(YunzhiSecurityRole.ROLE_PERSONAL)
     public void updatePhone(@RequestBody PUser pUser) throws ValidationException {
         this.userService.updatePhone(pUser);
     }
@@ -148,11 +137,22 @@ public class UserController {
     }
 
     @GetMapping("verifyPhoneNumber")
-    @Secured(YunzhiSecurityRole.ROLE_PERSONAL)
     public Boolean verifyPhoneNumber(@RequestParam String phoneNumber) {
         return this.userService.verifyPhoneNumber(phoneNumber);
     }
 
+
+    @PostMapping("driverRegister")
+    public void driverRegister(@RequestBody TheDriver theDriver) {
+        logger.debug("保存");
+        userService.saveDriver(theDriver);
+    }
+
+    @PostMapping("ownerRegister")
+    public void driverRegister(@RequestBody Owner owner) {
+        logger.debug("保存");
+        userService.saveOwner(owner);
+    }
     /**
      * 心跳方法
      */

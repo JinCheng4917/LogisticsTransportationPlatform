@@ -1,8 +1,12 @@
 package api.platform.Service;
 
+import api.platform.Enyity.Owner;
+import api.platform.Enyity.TheDriver;
 import api.platform.Enyity.User;
 import api.platform.Input.PUser;
 import api.platform.Input.VUser;
+import api.platform.Repository.DriverRepository;
+import api.platform.Repository.OwnerRepository;
 import api.platform.Repository.UserRepository;
 import com.mengyunzhi.core.exception.ObjectNotFoundException;
 import com.mengyunzhi.core.service.CommonService;
@@ -26,11 +30,18 @@ public class UserServiceImpl implements UserService{
     public static final String DEFAULT_PASSWORD = "hebut";
 
     private final UserRepository userRepository;
+    private final DriverRepository driverRepository;
+    private final OwnerRepository ownerRepository;
 
     private final YunzhiService<User> yunzhiService;
 
-    public UserServiceImpl(UserRepository userRepository, YunzhiService<User> yunzhiService) {
+    public UserServiceImpl(UserRepository userRepository,
+                           DriverRepository driverRepository,
+                           OwnerRepository ownerRepository,
+                           YunzhiService<User> yunzhiService) {
         this.userRepository = userRepository;
+        this.driverRepository = driverRepository;
+        this.ownerRepository = ownerRepository;
         this.yunzhiService = yunzhiService;
     }
 
@@ -79,6 +90,34 @@ public class UserServiceImpl implements UserService{
     @Override
     public List<User> getAll() {
         return (List<User>) this.userRepository.findAll();
+    }
+
+    @Override
+    public TheDriver saveDriver(TheDriver theDriver) {
+        TheDriver myDriver = new TheDriver();
+        myDriver.setLicensePlateNumber(theDriver.getLicensePlateNumber());
+        myDriver.setUser(new User());
+        myDriver.getUser().setRole(1L);
+        myDriver.getUser().setName(theDriver.getUser().getName());
+        myDriver.getUser().uncodePassword(theDriver.getUser().getPassword());
+        myDriver.getUser().setUsername(theDriver.getUser().getUsername());
+        myDriver.getUser().setPhone(theDriver.getUser().getUsername());
+        userRepository.save(myDriver.getUser());
+        return this.driverRepository.save(myDriver);
+    }
+
+    @Override
+    public Owner saveOwner(Owner owner) {
+        Owner myOwner = new Owner();
+        myOwner.setAddress(owner.getAddress());
+        myOwner.setUser(new User());
+        myOwner.getUser().setRole(0L);
+        myOwner.getUser().setName(owner.getUser().getName());
+        myOwner.getUser().uncodePassword(owner.getUser().getPassword());
+        myOwner.getUser().setUsername(owner.getUser().getUsername());
+        myOwner.getUser().setPhone(owner.getUser().getUsername());
+        userRepository.save(myOwner.getUser());
+        return this.ownerRepository.save(myOwner);
     }
 
     @Override

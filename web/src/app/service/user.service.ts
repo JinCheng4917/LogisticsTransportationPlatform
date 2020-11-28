@@ -66,13 +66,6 @@ export class UserService {
     }));
   }
 
-  /**
-   * 用户注册
-   * @param user 用户
-   */
-  register(user: User): Observable<void> {
-    return this.httpClient.post<void>(`${this.url}/register`, user);
-  }
 
   registerDriver(driver: Driver): Observable<void> {
     return this.httpClient.post<void>(`${this.url}/driverRegister`, driver);

@@ -2,6 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {User} from '../../../func/User';
 import {UserService} from '../../../service/user.service';
 import {AuthService} from '../../../service/auth.service';
+import {DriverService} from '../../../service/driver.service';
+import {OwnerService} from '../../../service/owner.service';
+import {Driver} from '../../../func/Driver';
+import {Owner} from '../../../func/Owner';
 
 @Component({
   selector: 'app-main',
@@ -14,6 +18,8 @@ export class MainComponent implements OnInit {
    * 当前登录用户
    */
   currentUser: User;
+  currentDriver: Driver;
+  currentOwner: Owner;
 
   constructor(private authService: AuthService) {
   }
@@ -23,8 +29,5 @@ export class MainComponent implements OnInit {
       .subscribe((user: User) => {
         this.currentUser = user;
       });
-    if (this.currentUser.role === 1) {
-
-    }
   }
 }

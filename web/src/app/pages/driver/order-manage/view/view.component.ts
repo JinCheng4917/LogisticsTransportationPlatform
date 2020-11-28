@@ -90,6 +90,9 @@ export class ViewComponent implements OnInit {
       this.fontColor = '#37be2e';
     }
     else if (status === 3) {
+      this.fontColor = '#2eb9be';
+    }
+    else if (status === 4) {
       this.fontColor = '#df2e2e';
     }
     return this.fontColor;

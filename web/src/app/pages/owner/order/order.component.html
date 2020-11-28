@@ -7,7 +7,7 @@
   <button type="submit" class="btn btn-info btn-sm"><i class="fas fa-search"></i>查询</button>
   &nbsp;
   <div class="custom-control custom-radio custom-control-inline">
-    <input type="radio" [checked]="1" (change)="onCheckBoxChange($event, 4)" id="customRadioInline5" name="customRadioInline1" class="custom-control-input">
+    <input type="radio" [checked]="1" (change)="onCheckBoxChange($event, 5)" id="customRadioInline5" name="customRadioInline1" class="custom-control-input">
     <label class="custom-control-label" for="customRadioInline5">全部</label>
   </div>
   <div class="custom-control custom-radio custom-control-inline">
@@ -24,7 +24,11 @@
   </div>
   <div class="custom-control custom-radio custom-control-inline">
     <input type="radio" (change)="onCheckBoxChange($event, 3)" id="customRadioInline3" name="customRadioInline1" class="custom-control-input">
-    <label class="custom-control-label" for="customRadioInline3">已完成</label>
+    <label class="custom-control-label" for="customRadioInline3">已送达</label>
+  </div>
+  <div class="custom-control custom-radio custom-control-inline">
+    <input type="radio" (change)="onCheckBoxChange($event, 4)" id="customRadioInline4" name="customRadioInline1" class="custom-control-input">
+    <label class="custom-control-label" for="customRadioInline4">已完成</label>
   </div>
   <button class="btn btn-sm btn-warning" (click)="clear()">
     <i class="fas fa-trash-alt"></i>
@@ -71,13 +75,17 @@
     <td>{{order.driver?.user.name}}</td>
     <td [style.color]="getFontColor(order.status)">{{order.status | status}}</td>
     <td>
-      <button class="btn btn-primary btn-sm mr-2" routerLink="/order/edit/{{order.id}}" [disabled]="order.status === 3">
+      <button class="btn btn-primary btn-sm mr-2" routerLink="/order/edit/{{order.id}}" [disabled]="order.status === 3 || order.status === 4">
         <i class="fas fa-edit"></i>
         编辑
       </button>
-      <button type="button" class="btn btn-danger btn-sm" (click)="delete(order)" [disabled]="order.status === 2">
+      <button type="button" class="btn btn-danger btn-sm mr-2" (click)="delete(order)" [disabled]="order.status != 1">
         <i class="fas fa-trash-alt"></i>
         删除
+      </button>
+      <button type="button" class="btn btn-info btn-sm" (click)="confirm(order)" [disabled]="order.status !== 3">
+        <i class="fas fa-check-circle"></i>
+      确认收货
       </button>
     </td>
   </tr>

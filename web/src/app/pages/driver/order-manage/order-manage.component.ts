@@ -8,6 +8,7 @@ import {OrdersService} from '../../../service/orders.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import {config} from '../../../conf/app.conf';
 import {UnknownProperty} from '../../../core/secondUtils';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-order-manage',
@@ -48,6 +49,8 @@ export class OrderManageComponent implements OnInit {
   constructor(private builder: FormBuilder,
               private commonService: CommonService,
               private userService: UserService,
+              private orderService: OrdersService,
+              private route: ActivatedRoute,
               private ordersService: OrdersService) {
     this.commonService.appOnReady(
       () => {
@@ -137,6 +140,9 @@ export class OrderManageComponent implements OnInit {
       this.fontColor = '#37be2e';
     }
     else if (status === 3) {
+      this.fontColor = '#2eb9be';
+    }
+    else if (status === 4) {
       this.fontColor = '#df2e2e';
     }
     return this.fontColor;
@@ -192,10 +198,23 @@ export class OrderManageComponent implements OnInit {
       case 1: this.queryParams.status = 1; break;
       case 2: this.queryParams.status = 2; break;
       case 3: this.queryParams.status = 3; break;
+      case 4: this.queryParams.status = 4; break;
     }
     this.loadData();
   }
 
+  public default(orders: Orders): any {
+    this.route.params.subscribe(params => {
+      this.orderService.default(orders.id, orders).subscribe(() => {
+        this.commonService.success(() => {
+          this.commonService.back();
+        }, '订单取消成功');
+      }, (response: HttpErrorResponse) => {
+        this.commonService.error(() => {
+        }, response.error.message);
+      });
+    });
+  }
 }
 
 

@@ -149,6 +149,8 @@ public class User extends YunzhiBase implements YunzhiEntity {
         this.IDNumber = IDNumber;
     }
 
+    public void uncodePassword(String password) {this.password = password; }
+
     public Long getRole() {
         return role;
     }

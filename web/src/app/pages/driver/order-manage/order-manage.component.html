@@ -20,7 +20,11 @@
   </div>
   <div class="custom-control custom-radio custom-control-inline">
     <input type="radio" (change)="onCheckBoxChange($event, 3)" id="customRadioInline3" name="customRadioInline1" class="custom-control-input">
-    <label class="custom-control-label" for="customRadioInline3">已完成</label>
+    <label class="custom-control-label" for="customRadioInline3">已送达</label>
+  </div>
+  <div class="custom-control custom-radio custom-control-inline">
+    <input type="radio" (change)="onCheckBoxChange($event, 4)" id="customRadioInline4" name="customRadioInline1" class="custom-control-input">
+    <label class="custom-control-label" for="customRadioInline4">已完成</label>
   </div>
   <button class="btn btn-sm btn-warning" (click)="clear()">
     <i class="fas fa-trash-alt"></i>
@@ -58,14 +62,14 @@
     <td>{{order.endTime |  date:"yyyy/MM/dd HH:mm:ss" }}</td>
     <td>
       <button class="btn btn-info btn-sm mr-2" routerLink="/driverOrderManage/view/{{order.id}}"
-              [disabled]="order.status === 3">
+              [disabled]="order.status === 3 || order.status === 4">
         <i class="fas fa-tasks"></i>
         变更状态
       </button>
-      <button class="btn btn-danger btn-sm mr-2" *ngIf="order.status === 1">
+      <button class="btn btn-danger btn-sm mr-2" *ngIf="order.status === 1" (click)="default(order)">
         取消订单
       </button>
-      <button class="btn btn-danger btn-sm mr-2" *ngIf="order.status!== 1" [disabled]="order.status === 2">
+      <button class="btn btn-danger btn-sm mr-2" *ngIf="order.status!== 1" [disabled]="order.status != 1">
         删除订单
       </button>
     </td>

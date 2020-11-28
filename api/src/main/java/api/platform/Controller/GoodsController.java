@@ -1,7 +1,6 @@
 package api.platform.Controller;
 
 import api.platform.Enyity.GoodsType;
-import api.platform.Security.YunzhiSecurityRole;
 import api.platform.Service.GoodsService;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +18,6 @@ public class GoodsController {
     }
 
     @GetMapping
-    @Secured({YunzhiSecurityRole.ROLE_USER})
     public List<GoodsType> getAll() {
         return this.goodsService.getAll();
     }

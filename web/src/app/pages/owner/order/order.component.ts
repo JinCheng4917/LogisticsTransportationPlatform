@@ -47,6 +47,7 @@ export class OrderComponent implements OnInit {
 
   constructor(private builder: FormBuilder,
               private commonService: CommonService,
+              private orderService: OrdersService,
               private userService: UserService,
               private ordersService: OrdersService) {
     this.commonService.appOnReady(
@@ -158,6 +159,9 @@ export class OrderComponent implements OnInit {
       this.fontColor = '#37be2e';
     }
     else if (status === 3) {
+      this.fontColor = '#2eb9be';
+    }
+    else if (status === 4) {
       this.fontColor = '#df2e2e';
     }
     return this.fontColor;
@@ -214,8 +218,23 @@ export class OrderComponent implements OnInit {
       case 2: this.queryParams.status = 2; break;
       case 3: this.queryParams.status = 3; break;
       case 4: this.queryParams.status = 4; break;
+      case 5: this.queryParams.status = 5; break;
     }
     this.loadData();
+  }
+
+  public confirm(order: Orders): void {
+    // 确认框
+    this.commonService.confirm((confirm: boolean) => {
+      if (confirm) {
+        this.orderService.confirmOrder(order.id, order).subscribe(() => {
+          this.commonService.success(() => {
+          }, '本次交易成功');
+        }, (response: HttpErrorResponse) => {
+          this.commonService.httpError(response);
+        });
+      }
+    }, '是否确认送达');
   }
 }
 

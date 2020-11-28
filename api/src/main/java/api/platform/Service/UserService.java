@@ -1,5 +1,7 @@
 package api.platform.Service;
 
+import api.platform.Enyity.Owner;
+import api.platform.Enyity.TheDriver;
 import api.platform.Enyity.User;
 import api.platform.Input.PUser;
 import api.platform.Input.VUser;
@@ -77,6 +79,20 @@ public interface UserService {
      * List<User>
      */
     List<User> getAll();
+
+    /**
+     * 保存driver
+     * @param theDriver
+     * @return
+     */
+    TheDriver saveDriver(TheDriver theDriver);
+
+    /**
+     * 保存owner
+     * @param owner
+     * @return
+     */
+    Owner saveOwner(Owner owner);
 
     /**
      * 验证新号码是否被用户使用

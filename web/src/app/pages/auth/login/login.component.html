@@ -75,24 +75,6 @@
           <input class="form-control form-control-sm" id="car" placeholder="请输入车牌号" formControlName="licensePlateNumber"/>
         </div>
 
-        <div class="row mt-3">
-          <div class="col-md-4 text-right">
-            <h5>运输类型：</h5>
-          </div>
-          <div class="col-md-4">
-
-          </div>
-          <div class="col-md-12">
-            <div class="row">
-              <div class="col-md-12">
-                <div class="custom-control-inline">
-                  <app-goods-select (goodsSelect)="selectGoods($event)"></app-goods-select>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
         <div class="form-group">
           <label for="register-password">
             <small>密码<code>*</code></small>
@@ -131,23 +113,6 @@
           </label>
           <input class="form-control form-control-sm" id="owner-address" placeholder="请输入住址" formControlName="address"/>
         </div>
-
-
-        <div class="row mt-3">
-          <div class="col-md-4 text-right">
-            <h5>货物类型：</h5>
-          </div>
-          <div class="col-md-12">
-            <div class="row">
-              <div class="col-md-8">
-                <div class="custom-control-inline">
-                  <app-goods-select (goodsSelect)="bindGoods($event)"></app-goods-select>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
 
         <div class="form-group">
           <label for="register-password">

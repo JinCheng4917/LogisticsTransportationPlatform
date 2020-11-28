@@ -2,6 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {UserService} from '../../../service/user.service';
+import {HttpErrorResponse} from '@angular/common/http';
+import {AuthService} from '../../../service/auth.service';
+import {CommonService} from '../../../service/common.service';
 
 
 @Component({
@@ -14,6 +17,8 @@ export class ModifyPasswordComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
               private router: Router,
+              private authService: AuthService,
+              private commonService: CommonService,
               private userService: UserService) {
   }
 
@@ -44,8 +49,11 @@ export class ModifyPasswordComponent implements OnInit {
         this.userService.logout().subscribe(() => {
           this.router.navigateByUrl('auth');
         });
-      }, () => {
-        console.log('修改密码失败');
+        this.commonService.success(() => {
+          this.commonService.back();
+        }, '修改密码成功');
+      }, (response: HttpErrorResponse) => {
+        this.commonService.httpError(response);
       });
   }
 }

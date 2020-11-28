@@ -16,6 +16,9 @@ export class StatusPipe implements PipeTransform {
         return `运输中`;
         break;
       case 3:
+        return `已送达`;
+        break;
+      case 4:
         return `已完成`;
         break;
     }

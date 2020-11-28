@@ -43,7 +43,7 @@ public class UserServiceAuth implements UserDetailsService {
         logger.debug("对用户进行授权");
         // TODO: 根据用户的角色，对用户进行不同的接口授权
 
-        logger.debug("构造用户");
+        logger.info("构造用户");
         return new org.springframework.security.core.userdetails.User(username, user.getPassword(), authorities);
     }
 }

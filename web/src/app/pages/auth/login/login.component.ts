@@ -9,6 +9,7 @@ import {CommonService} from '../../../service/common.service';
 import {Owner} from '../../../func/Owner';
 import {config} from '../../../conf/app.conf';
 import {GoodsType} from '../../../func/GoodsType';
+import validate = WebAssembly.validate;
 
 @Component({
   selector: 'app-login',
@@ -55,11 +56,10 @@ export class LoginComponent implements OnInit, OnDestroy{
               private router: Router,
               private commonService: CommonService,
               private builder: FormBuilder) {
-    this.version = config.version;
   }
 
   ngOnInit(): void {
-    // this.projectConfig = this.configService.config;
+    this.version = config.version;
     this.changeToLogin();
     /** 创建表单 */
     this.loginForm = this.builder.group({
@@ -75,8 +75,6 @@ export class LoginComponent implements OnInit, OnDestroy{
     this.driverRegisterForm = this.builder.group({
       name: [''],
       phone: [''],
-      car: [''],
-      goods: null,
       licensePlateNumber: [''],
       password: [''],
     });
@@ -88,9 +86,8 @@ export class LoginComponent implements OnInit, OnDestroy{
     this.ownerRegisterForm = this.builder.group({
       name: [''],
       phone: [''],
-      goods: null,
-      address: [''],
-      password: ['', Validators.required],
+      address: ['' ],
+      password: [''],
     });
   }
 
@@ -150,6 +147,7 @@ export class LoginComponent implements OnInit, OnDestroy{
 
   ngOnDestroy(): void {
   }
+
   get username(): AbstractControl {
     return this.loginForm.get('username');
   }
@@ -166,8 +164,6 @@ export class LoginComponent implements OnInit, OnDestroy{
     const driver = new Driver();
     driver.user.name = this.driverRegisterForm.get('name').value;
     driver.user.password = this.driverRegisterForm.get('password').value;
-    driver.goodsType = this.driverRegisterForm.get('goods')?.value;
-    driver.carType = this.driverRegisterForm.get('car')?.value;
     driver.user.username = this.driverRegisterForm.get('phone').value;
     driver.licensePlateNumber = this.driverRegisterForm.get('licensePlateNumber').value;
 
@@ -186,7 +182,6 @@ export class LoginComponent implements OnInit, OnDestroy{
   ownerRegister(): void {
     const owner = new Owner();
     owner.user.name = this.ownerRegisterForm.get('name').value;
-    owner.goodsType = this.ownerRegisterForm.get('goods')?.value;
     owner.address = this.ownerRegisterForm.get('address').value;
     owner.user.username = this.ownerRegisterForm.get('phone').value;
     owner.user.password = this.ownerRegisterForm.get('password').value;

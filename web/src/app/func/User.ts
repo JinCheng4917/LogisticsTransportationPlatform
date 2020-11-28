@@ -26,10 +26,12 @@ export class User {
 
   idnumber: string;
 
+  startTime: any;
+
   constructor(data?:
                 { id?: number, name?: string, username?: string,
                   password?: string, role?: number, admin?: boolean,
-                  quota?: number, idnumber?: string}) {
+                  quota?: number, idnumber?: string, startTime?: any}) {
     if (data) {
       if (data.id) {
         this.id = data.id;
@@ -60,6 +62,9 @@ export class User {
       }
       if (data.idnumber) {
         this.idnumber = data.idnumber;
+      }
+      if (data.startTime) {
+        this.startTime = data.startTime;
       }
     }
 

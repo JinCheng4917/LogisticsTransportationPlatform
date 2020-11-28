@@ -103,6 +103,13 @@ export class OrdersService {
   /**
    * 更新
    */
+  default(orderId: number, order: Orders): Observable<Orders> {
+    return this.httpClient.put<Orders>(`${this.url}/default/${orderId.toString()}`, order);
+  }
+
+  /**
+   * 更新
+   */
   updateStatus(orderId: number, status: number): Observable<Orders> {
     return this.httpClient.put<Orders>(`${this.url}/update/${orderId.toString()}`, status);
   }
@@ -110,6 +117,10 @@ export class OrdersService {
 
   completeOrder(orderId: number, order: Orders): Observable<Orders> {
     return this.httpClient.put<Orders>(`${this.url}/complete/${orderId.toString()}`, order);
+  }
+
+  confirmOrder(orderId: number, order: Orders): Observable<Orders> {
+    return this.httpClient.put<Orders>(`${this.url}/confirm/${orderId.toString()}`, order);
   }
 
   /**
